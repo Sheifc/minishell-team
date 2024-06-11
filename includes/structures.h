@@ -45,6 +45,7 @@ typedef struct s_shell
 	t_env	*env; // puntero a la cabeza de la lista de variables de entorno
 	t_cmd	*cmd; // puntero a la cabeza de la lista de comandos
     t_env   *export;
+    t_token *token;
     char    *line;
 	int		fdin; // fd creado tras abrir el infile. Inicializado a -1 en caso de no haber infile
 	int 	fdout; // fd creado tras crear el outfile. Inicializado a -1 en caso de no haber outfile
