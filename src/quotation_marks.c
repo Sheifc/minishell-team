@@ -21,6 +21,7 @@ int quo_marks(char c, char *str_cmd)
 {
     int smarks;
 
+    smarks = 0;
     if(c == '\'')
         smarks = is_there_smarks(c, str_cmd);
     if(c == '"')
