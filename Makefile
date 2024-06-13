@@ -14,8 +14,10 @@ OBJ_DIR			= obj/
 
 FILES_SRC		= main.c 				\
 					lexer.c 			\
-					history.c			\
-					quotation_marks.c	\
+					tokenizator.c 		\
+					setter.c			\
+					create_lists.c		\
+					printer.c			\
 
 SRC 			= $(addprefix $(SRC_DIR),$(FILES_SRC))
 OBJ_SRC 		= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

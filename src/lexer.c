@@ -1,24 +1,44 @@
-# include "../includes/minishell.h"
-# include "../includes/structures.h"
+# include "minishell.h"
 
-void odd_even_marks(int marks)
+/* void quotes(char *str_cmd, int *i, t_token *tok)
 {
-    if(marks % 2 == 0)
-        ft_printf("ejecuta\n");
-    else if(marks % 2 != 0)
-        ft_printf("\0");
-}
+    int j;
+    int flagsq;
+    int flagdq;
+
+    flagsq = 1;
+    flagdq = 1;
+    j = &i;
+    while(str_cmd[j])
+    {
+        if(str_cmd[j] == '\'')
+            flagsq++;
+        else if(str_cmd[j] == '"')
+            flagdq++;
+    }
+} */
 
 void lexer(char *str_cmd)
 {
     int i;
-    int marks;
+    t_token *tok;
 
+    tok = NULL;
     i = 0;
     while(str_cmd[i])
     {
-        marks = quo_marks(str_cmd[i], str_cmd);
-        i++;
+        if(str_cmd[i] == '|')
+            set_token(PIPE, str_cmd, &tok, &i);
+        /* else if(str_cmd[i] == '<')
+            set_token(IN, str_cmd, &tok, &i);
+        else if(str_cmd[i] == '>')
+            set_token(OUT, str_cmd, &tok, &i);
+        else if(str_cmd[i] == '\'' || str_cmd[i] == '"')
+            printf("comillas");
+        else if(str_cmd[i] != '|' && str_cmd[i] != '<' && str_cmd[i] != '>' && str_cmd[i] != '\'' && str_cmd[i] != '"' && str_cmd[i] != ' ')
+            set_token(WORD, str_cmd, &tok, &i); */
+        else
+            i++;
     }
-    odd_even_marks(marks);
+    //print_lists(tok);
 }

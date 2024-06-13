@@ -58,7 +58,10 @@ void	print_error(char *msg);
 
 //*--------------------LEXER-------------------------------
 void	lexer(char *str_cmd);
-int		quo_marks(char c, char *str_cmd);
+void	set_token(int type, char *str_cmd, t_token **tok, int *i);
+void	set_pipe(int type, char *str_cmd, t_token **tok, int *i);
+void	create_list(int type, t_token **tok, char *content);
+void print_lists(t_token *tok);
 
 //*--------------------HISTORY-----------------------------
 void	history(char *str_cmd);
