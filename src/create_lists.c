@@ -27,7 +27,7 @@ t_token *list_empty(int type, char *content)
     node = (t_token *)malloc(sizeof(t_token));
     if(!node)
         return(NULL);
-    node->content = content;
+    node->content = ft_strdup(content);
     node->type = type;
     node->next = NULL;
     return(node);
@@ -39,7 +39,6 @@ void create_list(int type, t_token **tok, char *content)
     if(!*tok)
     {
         *tok = list_empty(type, content);
-        printf("%s\n",(*tok)->content);
     }
     else
     {
