@@ -1,19 +1,27 @@
-# include "minishell.h"
+#include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
+void	init_struct(t_shell *com)
 {
-    char *str_cmd;
+	com->token = NULL;
+	com->cmd = NULL;
+	com->fdin = -1;
+	com->fdout = -1;
+}
 
-    (void)argc;
-    (void)argv;
-    (void)envp;
-    
-    str_cmd = readline(M"Mini"W"shell"RED"--> "RST);
-    while(str_cmd)
-    {
-        add_history(str_cmd);
-        lexer(str_cmd);
-        free(str_cmd);
-        str_cmd = readline(M"Mini"W"shell"RED"--> "RST);
-    }
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell	com;
+
+	(void)argc;
+	(void)argv;
+	(void)envp;
+	init_struct(&com);
+	com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+	while (com.str_cmd)
+	{
+		add_history(com.str_cmd);
+		lexer(com.str_cmd, com.token);
+		free(com.str_cmd);
+		com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+	}
 }
