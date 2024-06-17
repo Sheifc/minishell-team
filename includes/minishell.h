@@ -61,10 +61,13 @@ void	lexer(char *str_cmd, t_token *tok);
 void	set_token(int type, char *str_cmd, t_token **tok, int *i);
 void	setter(int type, char *str_cmd, t_token **tok, int *i);
 void	create_list(int type, t_token **tok, char *content);
-void print_lists(t_token *tok);
-int quote_stuff(int *i, char *str_cmd);
-int dquote_stuff(int *i, char *str_cmd);
-void heredoc_in(char *str_cmd, t_token **tok, int *i);
-void append_out(char *str_cmd, t_token **tok, int *i);
+void	print_lists(t_token *tok);
+int		quote_stuff(int *i, char *str_cmd);
+int		dquote_stuff(int *i, char *str_cmd);
+void	heredoc_in(char *str_cmd, t_token **tok, int *i);
+void	append_out(char *str_cmd, t_token **tok, int *i);
+
+//*--------------------PARSER-------------------------------
+void	parser(t_token *tok);
 
 #endif

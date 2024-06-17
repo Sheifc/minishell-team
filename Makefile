@@ -20,6 +20,7 @@ FILES_SRC		= main.c 				\
 					printer.c			\
 					quote_stuff.c 		\
 					utils1.c			\
+					parser.c			\
 
 SRC 			= $(addprefix $(SRC_DIR),$(FILES_SRC))
 OBJ_SRC 		= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
