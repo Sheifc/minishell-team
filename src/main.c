@@ -21,6 +21,7 @@ void	init_struct(t_shell *com)
 	com->cmd = NULL;
 	com->fdin = -1;
 	com->fdout = -1;
+    com->env = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -29,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	init_struct(&com);
 	com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
 	while (com.str_cmd)
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
         if(com.token)
             parser(com.token);
         if(com.token)
-            expand_variable(&com.token, envp);
+            expand_variables(&com.token, envp, com.env);
         free(com.str_cmd);
         clear_token(&com.token);
         com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);

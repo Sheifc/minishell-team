@@ -25,7 +25,7 @@ void	pipe_parser(t_token *tok)
 	{
 		if (aux->type == PIPE && aux->next->type == PIPE)
 		{
-			printf("Error: syntax error near unexpected token '|'\n");
+			printf("Error: syntax error near unexpected token '||'\n");
 			tok = NULL;
 			return ;
 		}
