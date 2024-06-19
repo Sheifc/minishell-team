@@ -21,6 +21,7 @@ FILES_SRC		= main.c 				\
 					quote_stuff.c 		\
 					utils1.c			\
 					parser.c			\
+					expand_variables.c	\
 
 SRC 			= $(addprefix $(SRC_DIR),$(FILES_SRC))
 OBJ_SRC 		= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

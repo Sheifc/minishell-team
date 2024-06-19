@@ -57,7 +57,7 @@ void	ft_error(char *msg);
 void	print_error(char *msg);
 
 //*--------------------LEXER-------------------------------
-void	lexer(char *str_cmd, t_token *tok);
+void	lexer(char *str_cmd, t_token **tok);
 void	set_token(int type, char *str_cmd, t_token **tok, int *i);
 void	setter(int type, char *str_cmd, t_token **tok, int *i);
 void	create_list(int type, t_token **tok, char *content);
@@ -69,5 +69,8 @@ void	append_out(char *str_cmd, t_token **tok, int *i);
 
 //*--------------------PARSER-------------------------------
 void	parser(t_token *tok);
+
+//*--------------------EXPAND_VARIABLES---------------------
+void	expand_variables(t_token **token, t_env *env);
 
 #endif

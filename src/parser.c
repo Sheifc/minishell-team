@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+void is_new_line(t_token *tok)
+{
+	if (ft_strncmp(tok->content, "\\n", 2) == 0 && tok->next == NULL)
+		tok = NULL;
+	else if(ft_strncmp(tok->content, "!", 1) == 0 && tok->next == NULL)
+		tok = NULL;
+	else if(ft_strncmp(tok->content, ":", 1) == 0 && tok->next == NULL)
+		tok = NULL;
+}
+
 void	pipe_parser(t_token *tok)
 {
 	t_token	*aux;
@@ -8,6 +18,7 @@ void	pipe_parser(t_token *tok)
 	if (aux && aux->type == PIPE)
 	{
 		printf("Error: syntax error near unexpected token '|'\n");
+		tok = NULL;
 		return ;
 	}
 	while (aux->next)
@@ -15,6 +26,7 @@ void	pipe_parser(t_token *tok)
 		if (aux->type == PIPE && aux->next->type == PIPE)
 		{
 			printf("Error: syntax error near unexpected token '|'\n");
+			tok = NULL;
 			return ;
 		}
 		aux = aux->next;
@@ -22,6 +34,7 @@ void	pipe_parser(t_token *tok)
 	if (aux && aux->type == PIPE)
 	{
 		printf("Error: syntax error near unexpected token '|'\n");
+		tok = NULL;
 		return ;
 	}
 }
@@ -29,4 +42,5 @@ void	pipe_parser(t_token *tok)
 void	parser(t_token *tok)
 {
 	pipe_parser(tok);
+	is_new_line(tok);
 }
