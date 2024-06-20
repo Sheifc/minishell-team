@@ -68,7 +68,7 @@ void	heredoc_in(char *str_cmd, t_token **tok, int *i);
 void	append_out(char *str_cmd, t_token **tok, int *i);
 
 //*--------------------PARSER-------------------------------
-void	parser(t_token *tok);
+void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 void	expand_variables(t_token **token, char **envp, t_env *env);

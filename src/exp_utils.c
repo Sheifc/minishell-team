@@ -43,7 +43,7 @@ char *replace_dollar(char *str, t_env *env)
             aux[j] = '\0';
             while(aux_env)
             {
-                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux)) == 0)
+                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux_env->key)) == 0)
                 {
                     final = ft_strjoin(final, aux_env->value);
                     break;

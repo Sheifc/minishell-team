@@ -15,34 +15,34 @@ void clear_token(t_token **token)
     *token = NULL;
 }
 
-void	init_struct(t_shell *com)
+void	init_struct(t_shell *data, char **envp)
 {
-	com->token = NULL;
-	com->cmd = NULL;
-	com->fdin = -1;
-	com->fdout = -1;
-    com->env = NULL;
+	data->token = NULL;
+	data->cmd = NULL;
+    data->env = NULL;
+	data->fdin = 0;
+	data->fdout = 0;
+    data->envp = envp;
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	com;
+	t_shell	data;
 
 	(void)argc;
 	(void)argv;
-	init_struct(&com);
-	com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
-	while (com.str_cmd)
+	init_struct(&data, envp);
+	data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+	while (data.str_cmd)
     {
-        add_history(com.str_cmd);
-        lexer(com.str_cmd, &com.token);
-        if(com.token)
-            parser(com.token);
-        if(com.token)
-            expand_variables(&com.token, envp, com.env);
-        print_lists(com.token);
-        free(com.str_cmd);
-        clear_token(&com.token);
-        com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+        add_history(data.str_cmd);
+        lexer(data.str_cmd, &data.token);
+        if(data.token)
+            parser(&data.token, envp, data.env);
+        if(data.token)
+            print_lists(data.token);
+        free(data.str_cmd);
+        clear_token(&data.token);
+        data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
     }
 }
