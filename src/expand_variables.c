@@ -85,9 +85,4 @@ void expand_variables(t_token **token, char **envp, t_env *env)
         }
         aux = aux->next;
     }
-    while(*token)
-    {
-        printf("%s\n", (*token)->content);
-        *token = (*token)->next;
-    }
 }

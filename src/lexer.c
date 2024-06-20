@@ -25,5 +25,4 @@ void	lexer(char *str_cmd, t_token **tok)
 	}
 	if(!tok)
 		return;
-	print_lists(*tok);
 }

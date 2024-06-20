@@ -20,13 +20,16 @@ char *replace_dollar(char *str, t_env *env)
     int j;
     char *aux;
     char *final;
-    (void)env;
+    t_env *aux_env;
 
     final = ft_strdup("");
     aux = ft_strdup("");
     i = 0;
     while(str[i])
     {
+        aux_env = env;
+        if(str[i] != '$')
+            final[i] = str[i];
         if(str[i] == '$')
         {
             i++;
@@ -38,16 +41,19 @@ char *replace_dollar(char *str, t_env *env)
                 i++;
             }
             aux[j] = '\0';
-            printf("%s\n", aux);
+            while(aux_env)
+            {
+                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux)) == 0)
+                {
+                    final = ft_strjoin(final, aux_env->value);
+                    break;
+                }
+                aux_env = aux_env->next;
+            }
         }
         else
             i++;
-        while(env)
-        {
-            if(ft_strncmp(aux, env->key, ft_strlen(env->key)) == 0)
-                ft_strjoin(final, aux);
-            env = env->next;
-        }
     }
+    free(aux);
     return(final);
 }

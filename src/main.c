@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
             parser(com.token);
         if(com.token)
             expand_variables(&com.token, envp, com.env);
+        print_lists(com.token);
         free(com.str_cmd);
         clear_token(&com.token);
         com.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
