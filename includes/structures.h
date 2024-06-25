@@ -35,7 +35,9 @@ typedef struct s_cmd
 {
 	char	**arg; // comando con sus flags
 	int		n_args; // numero de argumentos en el nodo: ej: echo -n sería 2
-    struct s_command *next; // puntero al siguiente nodo (comando)
+    int		fdin; // fd creado tras abrir el infile. Inicializado a -1 en caso de no haber infile
+	int 	fdout; // fd creado tras crear el outfile. Inicializado a -1 en caso de no haber outfile
+    struct s_cmd *next; // puntero al siguiente nodo (comando)
 }	t_cmd;
 
 // En esta estructura durante el parseo se debe guardar los fd de apartura o creación de archivos
@@ -46,8 +48,7 @@ typedef struct s_shell
 	t_cmd	*cmd; // puntero a la cabeza de la lista de comandos
     t_env   *export;
     char    *line;
-	int		fdin; // fd creado tras abrir el infile. Inicializado a -1 en caso de no haber infile
-	int 	fdout; // fd creado tras crear el outfile. Inicializado a -1 en caso de no haber outfile
+    char    **envp;
     char	*path; // ruta del comando para el executor    
     pid_t	pid;
 }	t_shell;
