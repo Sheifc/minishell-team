@@ -49,7 +49,8 @@ typedef struct s_shell
     t_env   *export;
     char    *line;
     char    **envp;
-    char	*path; // ruta del comando para el executor    
+    char	*path; // ruta del comando para el executor  
+    int     status;  
     pid_t	pid;
 }	t_shell;
 
