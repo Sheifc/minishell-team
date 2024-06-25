@@ -50,7 +50,8 @@ typedef struct s_shell
     t_token *token;
     char    *line;
 	char    **envp;
-    char	*path; // ruta del comando para el executor    
+    char	*path; // ruta del comando para el executor
+    int     status;
     pid_t	pid;
 }	t_shell;
 
