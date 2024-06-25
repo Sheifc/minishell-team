@@ -14,7 +14,7 @@
 # include <readline/history.h>
 
 //*--------------------BUILTINS----------------------------
-void	execute_builtin(t_shell *data);
+int	    execute_builtin(t_shell *data);
 void	ft_echo(t_cmd *args);
 void	ft_cd(t_shell *data);
 char    *get_current_directory(void);
@@ -35,6 +35,7 @@ void    update_list(t_env **env, char *key, char *value);
 
 //*--------------------EXECUTOR----------------------------
 void    get_path(t_shell *data);
+void    child_process(t_shell *data, t_cmd *cmd);
 void    executor(t_shell *data);
 
 //*--------------------UTILS-------------------------------
