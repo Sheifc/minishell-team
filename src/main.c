@@ -1,8 +1,24 @@
 #include "minishell.h"
 
-void clear_token(t_token **token)
+int only_spaces(char *str_cmd)
+{
+    int i;
+
+    i = 0;
+    while(str_cmd[i])
+    {
+        if(str_cmd[i] != ' ')
+            return(0);
+        i++;
+    }
+    return(1);
+}
+
+void clear_structs(t_token **token, t_cmd **cmd)
 {
     t_token *current = *token;
+    t_cmd *current_cmd = *cmd;
+    t_cmd *next_cmd;
     t_token *next;
 
     while (current != NULL)
@@ -11,7 +27,13 @@ void clear_token(t_token **token)
         free(current);
         current = next;
     }
-
+    while (current_cmd != NULL)
+    {
+        next_cmd = current_cmd->next;
+        free(current_cmd);
+        current_cmd = next_cmd;
+    }
+    *cmd = NULL;
     *token = NULL;
 }
 
@@ -36,13 +58,22 @@ int	main(int argc, char **argv, char **envp)
 	while (data.str_cmd)
     {
         add_history(data.str_cmd);
+        if(!ft_strlen(data.str_cmd) || only_spaces(data.str_cmd) == 1)
+        {
+            data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+            continue;
+        }
         lexer(data.str_cmd, &data.token);
-        if(data.token)
-            parser(&data.token, envp, data.env);
-        if(data.token)
-            print_lists(data.token);
+        if(data.token != NULL && syntaxis_is_ok(&data.token) == 1)
+        {
+            expand_variables(&data.token, envp, data.env);
+            fill_struct(&data);
+            //print_lists(data.token);
+        }
+
+        //FINAAAL
         free(data.str_cmd);
-        clear_token(&data.token);
+        clear_structs(&data.token, &data.cmd);
         data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
     }
 }

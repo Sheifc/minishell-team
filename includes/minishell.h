@@ -76,4 +76,8 @@ void	create_env_list(char *value, t_env **env, char *key);
 int is_there_a_dollar(char *str);
 char *replace_dollar(char *str, t_env *env);
 
+//*--------------------FILL_STRUCT--------------------------
+void	fill_struct(t_shell *data);
+int syntaxis_is_ok(t_token **token);
+
 #endif

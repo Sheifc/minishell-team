@@ -23,6 +23,4 @@ void	lexer(char *str_cmd, t_token **tok)
 		else
 			i++;
 	}
-	if(!tok)
-		return;
 }

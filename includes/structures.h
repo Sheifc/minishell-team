@@ -37,7 +37,7 @@ typedef struct s_cmd
 {
 	char	**arg; // comando con sus flags
 	int		n_args; // numero de argumentos en el nodo: ej: echo -n sería 2
-    struct s_command *next; // puntero al siguiente nodo (comando)
+    struct s_cmd *next; // puntero al siguiente nodo (comando)
 }	t_cmd;
 
 // En esta estructura durante el parseo se debe guardar los fd de apertura o creación de archivos
