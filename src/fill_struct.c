@@ -34,13 +34,20 @@ t_cmd	*list_empty_fill(t_token **token, int argcs)
         free(node);
         return (NULL);
     }
+    node->fdin = -1;
+    node->fdout = -1;
     i = 0;
-    while(*token && (*token)->type == WORD)
+    while(*token && (*token)->type != PIPE)
     {
-        node->arg[i] = ft_strdup((*token)->content);
-        *token = (*token)->next;
-        i++;
-        node->n_args = i;
+        if((*token)->type == IN || (*token)->type == OUT)
+            ft_innout(node, token);
+        if((*token) && (((*token)->type == WORD) || ((*token)->type == QUOTE) || ((*token)->type == DQUOTE)))
+        {
+            node->arg[i] = ft_strdup((*token)->content);
+            *token = (*token)->next;
+            i++;
+            node->n_args = i;
+        }
     }
     node->arg[i] = NULL;
     node->next = NULL;
@@ -92,6 +99,8 @@ void print_cmd_list(t_cmd *cmd)
             count++;
         }
         printf("N_args: %d\n", cmd->n_args);
+        printf("FD_IN: %d\n", cmd->fdin);
+        printf("FD_OUT: %d\n", cmd->fdout);
         cmd = cmd->next;
     }
 }
@@ -103,18 +112,10 @@ void fill_struct(t_shell *data)
     argcs = count_args(data->token);
     while(data->token)
     {
-        if(data->token->type == WORD)
+        if(data->token->type != PIPE)
             create_fill_list(&data->cmd, &data->token, argcs);
         else if(data->token->type == PIPE)
             data->token = data->token->next;
-        else if(data->token->type == IN)
-            printf("Save infile\n");
-        else if(data->token->type == OUT)
-            printf("Save outfile\n");
-        else if(data->token->type == APPEND)
-            printf("Save appendfile\n");
-        else if(data->token->type == HEREDOC)
-            printf("Save heredoc\n");
     }
     print_cmd_list(data->cmd);
     printf("sale\n");

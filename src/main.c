@@ -29,6 +29,10 @@ void clear_structs(t_token **token, t_cmd **cmd)
     }
     while (current_cmd != NULL)
     {
+        if(current_cmd->fdin != -1)
+            close(current_cmd->fdin);
+        if(current_cmd->fdout != -1)
+            close(current_cmd->fdout);
         next_cmd = current_cmd->next;
         free(current_cmd);
         current_cmd = next_cmd;
@@ -42,8 +46,6 @@ void	init_struct(t_shell *data, char **envp)
 	data->token = NULL;
 	data->cmd = NULL;
     data->env = NULL;
-	data->fdin = 0;
-	data->fdout = 0;
     data->envp = envp;
 }
 
@@ -54,12 +56,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_struct(&data, envp);
-	data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+	data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
 	while (data.str_cmd)
     {
         add_history(data.str_cmd);
         if(!ft_strlen(data.str_cmd) || only_spaces(data.str_cmd) == 1)
-            data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+            data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
         lexer(data.str_cmd, &data.token);
         if(data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
@@ -71,6 +73,6 @@ int	main(int argc, char **argv, char **envp)
         //FINAAAL
         free(data.str_cmd);
         clear_structs(&data.token, &data.cmd);
-        data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
+        data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
     }
 }

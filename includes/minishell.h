@@ -80,4 +80,8 @@ char *replace_dollar(char *str, t_env *env);
 void	fill_struct(t_shell *data);
 int syntaxis_is_ok(t_token **token);
 
+//*--------------------FDS-------------------------------
+void ft_innout(t_cmd *cmd, t_token **tok);
+
+
 #endif
