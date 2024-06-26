@@ -5,6 +5,8 @@ int in_out_parser(t_token **tok)
 	t_token *aux;
 
 	aux = *tok;
+	while(aux && aux->type != IN && aux->type != OUT && aux->type != APPEND && aux->type != HEREDOC)
+		aux = aux->next;
 	if(aux && (aux->type == IN || aux->type == OUT || aux->type == APPEND || aux->type == HEREDOC))
 	{
 		if(aux->next == NULL)
@@ -12,24 +14,14 @@ int in_out_parser(t_token **tok)
 			printf("bash: syntax error near unexpected token 'newline'\n");
             return(1);
         }
-		else if(aux->type == IN && aux->next->type != WORD)
+		else if((aux->type == IN && aux->next->type != WORD) || (aux->type == HEREDOC && aux->next->type != WORD))
         {
 			printf("bash: syntax error near unexpected token '<'\n");
             return(1);
         }
-		else if(aux->type == OUT && aux->next->type != WORD)
+		else if((aux->type == OUT && aux->next->type != WORD) || (aux->type == APPEND && aux->next->type != WORD))
         {
 			printf("bash: syntax error near unexpected token '>'\n");
-            return(1);
-        }
-		else if(aux->type == HEREDOC && aux->next->type != WORD)
-        {
-			printf("bash: syntax error near unexpected token '<<'\n");
-            return(1);
-        }
-		else if(aux->type == APPEND && aux->next->type != WORD)
-        {
-			printf("bash: syntax error near unexpected token '>>'\n");
             return(1);
         }
 	}

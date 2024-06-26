@@ -20,24 +20,27 @@ void	add_back_fill(t_cmd **lst, t_cmd *new)
 		last->next = new;
 }
 
-t_cmd	*list_empty_fill(t_token *token, int argcs)
+t_cmd	*list_empty_fill(t_token **token, int argcs)
 {
-	t_cmd	*node;
+    t_cmd	*node;
     int i;
 
-	node = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!node)
-		return (NULL);
-    
-    node->arg = (char **)malloc(sizeof(char *) * argcs + 1);
-    if (!node->arg)
+    node = (t_cmd *)malloc(sizeof(t_cmd));
+    if (!node)
         return (NULL);
-    i = 0;
-	while(token && token->type == WORD)
+    node->arg = (char **)malloc(sizeof(char *) * (argcs + 1));
+    if (!node->arg)
     {
-        node->arg[i] = ft_strdup(token->content);
-        token = token->next;
+        free(node);
+        return (NULL);
+    }
+    i = 0;
+    while(*token && (*token)->type == WORD)
+    {
+        node->arg[i] = ft_strdup((*token)->content);
+        *token = (*token)->next;
         i++;
+        node->n_args = i;
     }
     node->arg[i] = NULL;
     node->next = NULL;
@@ -49,10 +52,10 @@ void	create_fill_list(t_cmd **cmd, t_token **token, int argcs)
     t_cmd	*aux;
     
     if (!*cmd)
-        *cmd = list_empty_fill(*token, argcs);
+        *cmd = list_empty_fill(token, argcs);
     else
     {
-        aux = list_empty_fill(*token, argcs);
+        aux = list_empty_fill(token, argcs);
         add_back_fill(cmd, aux);
     }
 }
@@ -88,6 +91,7 @@ void print_cmd_list(t_cmd *cmd)
             printf("Arg[%d]: %s\n", count, cmd->arg[count]);
             count++;
         }
+        printf("N_args: %d\n", cmd->n_args);
         cmd = cmd->next;
     }
 }
@@ -111,7 +115,6 @@ void fill_struct(t_shell *data)
             printf("Save appendfile\n");
         else if(data->token->type == HEREDOC)
             printf("Save heredoc\n");
-        data->token = data->token->next;
     }
     print_cmd_list(data->cmd);
     printf("sale\n");

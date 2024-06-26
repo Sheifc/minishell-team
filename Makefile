@@ -20,7 +20,6 @@ FILES_SRC		= main.c 				\
 					printer.c			\
 					quote_stuff.c 		\
 					utils1.c			\
-					parser.c			\
 					expand_variables.c	\
 					create_env_lists.c	\
 					exp_utils.c			\

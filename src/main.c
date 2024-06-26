@@ -59,10 +59,7 @@ int	main(int argc, char **argv, char **envp)
     {
         add_history(data.str_cmd);
         if(!ft_strlen(data.str_cmd) || only_spaces(data.str_cmd) == 1)
-        {
             data.str_cmd = readline(M "Mini" W "shell" RED "--> " RST);
-            continue;
-        }
         lexer(data.str_cmd, &data.token);
         if(data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
