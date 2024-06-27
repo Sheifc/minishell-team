@@ -22,8 +22,6 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
-// Estructura para el nodo de la lista enlazada de las variables de entorno
-// misma estructura para la lista env y la lista export que no es mas que la lista env ordenada
 typedef struct s_env
 {
 	char			*key;
@@ -31,28 +29,24 @@ typedef struct s_env
     struct s_env	*next;
 }	t_env;
 
-// esta estructura es un nodo para una lista enlazada de comandos: 
-// cada nodo debe contener un comando con sus flags en formato array **arg: ejemplo: echo -n
 typedef struct s_cmd
 {
-	char	**arg; // comando con sus flags
-	int		n_args; // numero de argumentos en el nodo: ej: echo -n sería 2
-    int		fdin; // fd creado tras abrir el infile. Inicializado a -1 en caso de no haber infile
-	int 	fdout; // fd creado tras crear el outfile. Inicializado a -1 en caso de no haber outfile
-    struct s_cmd *next; // puntero al siguiente nodo (comando)
+	char	**arg;
+	int		n_args;
+    int		fdin;
+	int 	fdout;
+    struct s_cmd *next;
 }	t_cmd;
 
-// En esta estructura durante el parseo se debe guardar los fd de apertura o creación de archivos
-// Este fd debe ir actualizandose de modo que el ejecutor acceda al último fd para plasmar la salida del comando, en caso de haber mas de uno
 typedef struct s_shell
 {
-	t_env	*env; // puntero a la cabeza de la lista de variables de entorno
-	t_cmd	*cmd; // puntero a la cabeza de la lista de comandos
+	t_env	*env;
+	t_cmd	*cmd;
     t_env   *export;
     t_token *token;
-    char    *str_cmd; //Prompt comando
+    char    *str_cmd;
     char    **envp;
-    char	*path; // ruta del comando para el executor
+    char	*path;
     int     status;
     pid_t	pid;
 }	t_shell;

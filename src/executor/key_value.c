@@ -26,5 +26,3 @@ char    *get_value(t_env *env, char *key)
     }
     return (NULL);
 }
-
-

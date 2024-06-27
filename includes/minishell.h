@@ -108,6 +108,7 @@ char    *replace_dollar(char *str, t_env *env);
 
 //*--------------------FILL_STRUCT--------------------------
 // fill_struct.c
+void    print_cmd_list(t_cmd *cmd);
 void	fill_struct(t_shell *data);
 // syntaxis.c
 int     syntaxis_is_ok(t_token **token);
