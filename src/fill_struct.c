@@ -39,7 +39,7 @@ t_cmd	*list_empty_fill(t_token **token, int argcs)
     i = 0;
     while(*token && (*token)->type != PIPE)
     {
-        if((*token)->type == IN || (*token)->type == OUT)
+        if((*token)->type == IN || (*token)->type == OUT || (*token)->type == APPEND || (*token)->type == HEREDOC)
             ft_innout(node, token);
         if((*token) && (((*token)->type == WORD) || ((*token)->type == QUOTE) || ((*token)->type == DQUOTE)))
         {

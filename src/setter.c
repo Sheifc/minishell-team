@@ -3,13 +3,9 @@
 void	append_hdoc_tok(char *str_cmd, t_token **tok, int *i)
 {
 	if (str_cmd[*i] == '<')
-	{
 		heredoc_in(str_cmd, tok, i);
-	}
 	else if (str_cmd[*i] == '>')
-	{
 		append_out(str_cmd, tok, i);
-	}
 }
 
 void	word_tok(char *str_cmd, t_token **tok, int *i)

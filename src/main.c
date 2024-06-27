@@ -67,10 +67,7 @@ int	main(int argc, char **argv, char **envp)
         {
             expand_variables(&data.token, envp, data.env);
             fill_struct(&data);
-            //print_lists(data.token);
         }
-
-        //FINAAAL
         free(data.str_cmd);
         clear_structs(&data.token, &data.cmd);
         data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);

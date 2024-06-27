@@ -1,5 +1,12 @@
 # include "minishell.h"
 
+void save_heredoc(t_cmd *cmd, t_token **tok) 
+{
+    (void)cmd;
+    (*tok) = (*tok)->next;
+    // Hace heredoc
+}
+
 void save_infile(t_cmd *cmd, t_token **tok)
 {
     (*tok) = (*tok)->next;
@@ -29,4 +36,11 @@ void ft_innout(t_cmd *cmd, t_token **tok)
         save_infile(cmd, tok);
     else if((*tok)->type == OUT)
         save_outfile(cmd, tok);
+    else if((*tok)->type == APPEND)
+    {
+        printf("append\n");
+        (*tok) = (*tok)->next;
+    }
+    else if((*tok)->type == HEREDOC)
+        save_heredoc(cmd, tok);
 }
