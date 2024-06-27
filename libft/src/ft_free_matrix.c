@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sheferna <sheferna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hinve <hinve@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:38:03 by sheferna          #+#    #+#             */
-/*   Updated: 2024/04/09 11:23:58 by sheferna         ###   ########.fr       */
+/*   Updated: 2024/06/14 01:38:21 by hinve            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	ft_free_matrix(char **matrix)
 		free(matrix[i]);
 		i++;
 	}
-	free(matrix);
 	*matrix = NULL;
+	free(matrix);
 }

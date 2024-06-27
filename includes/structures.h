@@ -10,7 +10,9 @@ typedef enum e_token_type
     IN,
     OUT,
     HEREDOC,
-    APPEND
+    APPEND,
+    QUOTE,
+    DQUOTE
 }   t_token_type;
 
 typedef struct s_token
@@ -40,17 +42,18 @@ typedef struct s_cmd
     struct s_cmd *next; // puntero al siguiente nodo (comando)
 }	t_cmd;
 
-// En esta estructura durante el parseo se debe guardar los fd de apartura o creación de archivos
+// En esta estructura durante el parseo se debe guardar los fd de apertura o creación de archivos
 // Este fd debe ir actualizandose de modo que el ejecutor acceda al último fd para plasmar la salida del comando, en caso de haber mas de uno
 typedef struct s_shell
 {
 	t_env	*env; // puntero a la cabeza de la lista de variables de entorno
 	t_cmd	*cmd; // puntero a la cabeza de la lista de comandos
     t_env   *export;
-    char    *line;
+    t_token *token;
+    char    *str_cmd; //Prompt comando
     char    **envp;
-    char	*path; // ruta del comando para el executor  
-    int     status;  
+    char	*path; // ruta del comando para el executor
+    int     status;
     pid_t	pid;
 }	t_shell;
 

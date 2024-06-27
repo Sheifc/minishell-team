@@ -12,7 +12,20 @@ RM				= rm -rf
 SRC_DIR			= src/
 OBJ_DIR			= obj/
 
-FILES_SRC		= main.c
+FILES_SRC		= main.c 				\
+					lexer.c 			\
+					tokenizator.c 		\
+					setter.c			\
+					create_lists.c		\
+					printer.c			\
+					quote_stuff.c 		\
+					utils1.c			\
+					expand_variables.c	\
+					create_env_lists.c	\
+					exp_utils.c			\
+					fill_struct.c		\
+					syntaxis.c			\
+					file_des.c			\
 
 SRC 			= $(addprefix $(SRC_DIR),$(FILES_SRC))
 OBJ_SRC 		= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
