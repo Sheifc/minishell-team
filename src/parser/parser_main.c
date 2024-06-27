@@ -49,7 +49,7 @@ void	init_struct(t_shell *data, char **envp)
     data->envp = envp;
 }
 
-int	main(int argc, char **argv, char **envp)
+/* int	main(int argc, char **argv, char **envp)
 {
 	t_shell	data;
 
@@ -72,4 +72,4 @@ int	main(int argc, char **argv, char **envp)
         clear_structs(&data.token, &data.cmd);
         data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
     }
-}
+} */

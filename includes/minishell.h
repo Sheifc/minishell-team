@@ -22,48 +22,77 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+// ***EXECUTOR***
 //*--------------------BUILTINS----------------------------
+
+// exec_builtins.c
 int	    execute_builtin(t_shell *data);
-void	ft_echo(t_cmd *args);
+// cd.c
 void	ft_cd(t_shell *data);
+// echo.c
+void	ft_echo(t_cmd *args);
+// env.c
+void	ft_env(t_env *env);
+// export.c
+void	ft_export(t_shell *data);
+// exit.c
+void	ft_exit(t_cmd *cmd);
+// pwd.c
 char	*get_current_directory(void);
 int		ft_pwd(void);
-void	ft_export(t_shell *data);
+// unset.c
 void	ft_unset(t_shell *data);
-void	ft_env(t_env *env);
-void	ft_exit(t_cmd *cmd);
 
 //*--------------------ENV---------------------------------
+
+// env.c
 void	fill_env_list(t_env **head, char **envp, int *i);
 void	init_env(t_shell *data, char **envp);
+// list_utils.c
 void	add(t_env **head, char *key, char *value);
 void	pop(t_env **head, char *key);
+// key_value.c
 void	get_key_value(char *str, char **key, char **value);
 char	*get_value(t_env *env, char *key);
 void	update_list(t_env **env, char *key, char *value);
 
 //*--------------------EXECUTOR----------------------------
+// path.c
 void	get_path(t_shell *data);
+// executor.c
 void	executor(t_shell *data);
 
 //*--------------------UTILS-------------------------------
+// exec_utils.c
 void	ft_swap(char **a, char **b);
+// error.c
+void	ft_error(char *msg);
+void	print_error(char *msg);
+// free.c
+void	free_env_list(t_env *head);
+void	free_env_node(t_env **node);
+void    free_all(t_shell data);
+// printing.c
 void	print_key(t_env *head);
 char	*print_value(t_env *env, char *key);
 void	print_list(t_env *head);
-void	free_env_list(t_env *head);
-void	free_env_node(t_env **node);
-void	ft_error(char *msg);
-void	print_error(char *msg);
 
+// ***PARSER***
 //*--------------------LEXER-------------------------------
+// lexer.c
 void	lexer(char *str_cmd, t_token **tok);
+// tokenizator.c
 void	set_token(int type, char *str_cmd, t_token **tok, int *i);
+// setter.c
 void	setter(int type, char *str_cmd, t_token **tok, int *i);
+// create_lists.c
 void	create_list(int type, t_token **tok, char *content);
+// printer.c
 void	print_lists(t_token *tok);
+// quote_stuff.c
 int		quote_stuff(int *i, char *str_cmd);
 int		dquote_stuff(int *i, char *str_cmd);
+// utils.c
 void	heredoc_in(char *str_cmd, t_token **tok, int *i);
 void	append_out(char *str_cmd, t_token **tok, int *i);
 
@@ -71,17 +100,25 @@ void	append_out(char *str_cmd, t_token **tok, int *i);
 void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
+// expand_variables.c
 void	expand_variables(t_token **token, char **envp, t_env *env);
-void	create_env_list(char *value, t_env **env, char *key);
-int is_there_a_dollar(char *str);
-char *replace_dollar(char *str, t_env *env);
+// exp_utils.c
+int     is_there_a_dollar(char *str);
+char    *replace_dollar(char *str, t_env *env);
 
 //*--------------------FILL_STRUCT--------------------------
+// fill_struct.c
 void	fill_struct(t_shell *data);
-int syntaxis_is_ok(t_token **token);
+// syntaxis.c
+int     syntaxis_is_ok(t_token **token);
+// parser_main.c
+int     only_spaces(char *str_cmd);
+void    clear_structs(t_token **token, t_cmd **cmd);
+void	init_struct(t_shell *data, char **envp);
 
 //*--------------------FDS-------------------------------
-void ft_innout(t_cmd *cmd, t_token **tok);
+// file_des.c
+void    ft_innout(t_cmd *cmd, t_token **tok);
 
 
 #endif

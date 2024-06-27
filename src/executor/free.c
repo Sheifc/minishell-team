@@ -21,3 +21,11 @@ void    free_env_node(t_env **node)
     free(*node);
     *node = NULL;
 }
+
+void    free_all(t_shell data)
+{
+    free(data.str_cmd);
+    free_env_list(data.env);
+    free_env_list(data.export);
+    clear_structs(&data.token, &data.cmd);
+}

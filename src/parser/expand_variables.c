@@ -1,6 +1,6 @@
 # include "minishell.h"
 
-char *get_key_parser(char *str)
+/* char *get_key_parser(char *str)
 {
     int i;
     char *key;
@@ -85,4 +85,4 @@ void expand_variables(t_token **token, char **envp, t_env *env)
         }
         aux = aux->next;
     }
-}
+} */

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_env	*ft_last_parser(t_env *lst)
+/* t_env	*ft_last_parser(t_env *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -46,4 +46,4 @@ void	create_env_list(char *value, t_env **env, char *key)
 	}
 	free(value);
     free(key);
-}
+} */
