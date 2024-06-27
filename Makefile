@@ -16,13 +16,25 @@ OBJ_DIR			= obj/
 OBJ_EXEC_DIR	= $(OBJ_DIR)executor/
 OBJ_PARSER_DIR	= $(OBJ_DIR)parser/
 
-FILES_EXEC		= exec_main.c exec_builtins.c exec_utils.c \
-				free.c list_utils.c key_value.c \
-				echo.c pwd.c cd.c env.c  exit.c \
-				export.c unset.c executor.c path.c \
-				error.c printing.c \
+FILES_EXEC		= exec_main.c 		\
+				exec_builtins.c 	\
+				exec_utils.c 		\
+				free.c 				\
+				list_utils.c 		\
+				key_value.c 		\
+				echo.c 				\
+				pwd.c 				\
+				cd.c 				\
+				env.c  				\
+				exit.c 				\
+				export.c 			\
+				unset.c 			\
+				executor.c			\
+				path.c 				\
+				error.c 			\
+				printing.c 			\
 
-FILES_PARSER	= main.c 				\
+FILES_PARSER	= parser_main.c 	\
 				lexer.c 			\
 				tokenizator.c 		\
 				setter.c			\
@@ -37,12 +49,15 @@ FILES_PARSER	= main.c 				\
 				syntaxis.c			\
 				file_des.c			\
 
+FILES_SRC       = main.c 			\
+
 SRC_EXEC 		= $(addprefix $(EXEC_DIR),$(FILES_EXEC))
 SRC_PARSER 		= $(addprefix $(PARSER_DIR),$(FILES_PARSER))
-SRC 			= $(SRC_EXEC) $(SRC_PARSER)
+SRC 			= $(SRC_EXEC) $(SRC_PARSER) $(SRC_MAIN)
 OBJ_EXEC 		= $(SRC_EXEC:$(EXEC_DIR)%.c=$(OBJ_EXEC_DIR)%.o)
 OBJ_PARSER 		= $(SRC_PARSER:$(PARSER_DIR)%.c=$(OBJ_PARSER_DIR)%.o)
-OBJ_SRC 		= $(OBJ_EXEC) $(OBJ_PARSER)
+OBJ_MAIN        = $(SRC_MAIN:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ_SRC 		= $(OBJ_EXEC) $(OBJ_PARSER) $(OBJ_MAIN)
 
 vpath %.c $(SRC_DIR) $(EXEC_DIR) $(PARSER_DIR)
 
@@ -52,6 +67,10 @@ $(OBJ_EXEC_DIR)%.o: $(EXEC_DIR)%.c
 
 $(OBJ_PARSER_DIR)%.o: $(PARSER_DIR)%.c
 	@mkdir -p $(OBJ_PARSER_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
