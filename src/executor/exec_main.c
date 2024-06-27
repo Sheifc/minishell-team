@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
+/* int main(int argc, char **argv, char **envp)
 {
     t_shell data;
     t_cmd *cmd = malloc(sizeof(t_cmd) * argc - 1);
@@ -36,5 +36,5 @@ int main(int argc, char **argv, char **envp)
     free_env_list(data.env);  // Liberar la lista de entorno
     free_env_list(data.export);
     return (0);
-}
+} */
 

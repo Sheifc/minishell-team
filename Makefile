@@ -22,8 +22,7 @@ FILES_EXEC		= exec_main.c exec_builtins.c exec_utils.c \
 				export.c unset.c executor.c path.c \
 				error.c printing.c \
 
-FILES_PARSER	= test.c \
-				main.c 				\
+FILES_PARSER	= main.c 				\
 				lexer.c 			\
 				tokenizator.c 		\
 				setter.c			\
