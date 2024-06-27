@@ -23,7 +23,7 @@
 # include <unistd.h>
 
 //*--------------------BUILTINS----------------------------
-void	execute_builtin(t_shell *data);
+int	    execute_builtin(t_shell *data);
 void	ft_echo(t_cmd *args);
 void	ft_cd(t_shell *data);
 char	*get_current_directory(void);
