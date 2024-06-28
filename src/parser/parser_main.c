@@ -46,6 +46,7 @@ void	init_struct(t_shell *data, char **envp)
 	data->token = NULL;
 	data->cmd = NULL;
     data->env = NULL;
+    data->env = NULL;
     data->envp = envp;
 }
 
