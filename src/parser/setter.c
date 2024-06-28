@@ -30,7 +30,10 @@ void	quote_tok(char *str_cmd, t_token **tok, int *i)
 	if (qflag > 0)
 		create_list(QUOTE, tok, ft_substr(str_cmd, start + 1, qflag));
 	else if (qflag < 0)
+	{
+		printf("Error: unclosed quote\n");
 		(*tok) = NULL;
+	}
 	*i += 1;
 }
 
@@ -44,7 +47,10 @@ void	dquote_tok(char *str_cmd, t_token **tok, int *i)
 	if (qflag > 0)
 		create_list(DQUOTE, tok, ft_substr(str_cmd, start + 1, qflag));
 	else if (qflag < 0)
+	{
+		printf("Error: unclosed dquote\n");
 		(*tok) = NULL;
+	}
 	*i += 1;
 }
 

@@ -88,27 +88,6 @@ void add_cmd_to_shell(t_cmd **cmd_list, t_token **token)
     }
 }
 
-// Imprimir lista de comandos
-void print_cmd_list(t_cmd *cmd)
-{
-    int count;
-    if (cmd == NULL)
-        return;
-    while (cmd)
-    {
-        count = 0;
-        while (cmd->arg[count])
-        {
-            printf("Arg[%d]: %s\n", count, cmd->arg[count]);
-            count++;
-        }
-        printf("N_args: %d\n", cmd->n_args);
-        printf("FD_IN: %d\n", cmd->fdin);
-        printf("FD_OUT: %d\n", cmd->fdout);
-        cmd = cmd->next;
-    }
-}
-
 // Llenar estructura t_shell
 void fill_struct(t_shell *data)
 {
