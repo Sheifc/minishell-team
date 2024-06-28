@@ -1,4 +1,4 @@
-# include "minishell.h"
+#include "minishell.h"
 
 void	save_heredoc(t_cmd *cmd, t_token **tok)
 {
@@ -12,9 +12,10 @@ void	save_heredoc(t_cmd *cmd, t_token **tok)
 	line = readline("> ");
 	while (line)
 	{
-        add_history(line);
+		add_history(line);
 		expanded_line = expand_heredoc(line);
-		if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content) + 1) == 0)
+		if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content)
+				+ 1) == 0)
 			break ;
 		write(cmd->fdin, expanded_line, ft_strlen(expanded_line));
 		write(cmd->fdin, "\n", 1);

@@ -1,28 +1,27 @@
-# include "minishell.h"
+#include "minishell.h"
 
-char *expand_utils(char *line, char *temp, int *i, int *temp_len)
+char	*expand_utils(char *line, char *temp, int *i, int *temp_len)
 {
-    char	*aux;
-    int		j;
-    char    *new_temp;
-    char    *env_value;
+	char	*aux;
+	int		j;
+	char	*new_temp;
+	char	*env_value;
 
-    aux = (char *)malloc(256 * sizeof(char));
-    j = 0;
-    (*i)++;
-    while (line[*i] && ft_isalnum(line[*i]))
-        aux[j++] = line[(*i)++];
-    aux[j] = '\0';
-    env_value = getenv(aux);
-    if (!env_value)
-        env_value = "";
-    new_temp = ft_strjoin(temp, env_value);
-    *temp_len += ft_strlen(env_value);
-    free(aux);
-    free(temp);
-    return new_temp;
+	aux = (char *)malloc(256 * sizeof(char));
+	j = 0;
+	(*i)++;
+	while (line[*i] && ft_isalnum(line[*i]))
+		aux[j++] = line[(*i)++];
+	aux[j] = '\0';
+	env_value = getenv(aux);
+	if (!env_value)
+		env_value = "";
+	new_temp = ft_strjoin(temp, env_value);
+	*temp_len += ft_strlen(env_value);
+	free(aux);
+	free(temp);
+	return (new_temp);
 }
-
 
 char	*expand_heredoc(char *line)
 {
