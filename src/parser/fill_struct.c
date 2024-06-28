@@ -112,11 +112,14 @@ void print_cmd_list(t_cmd *cmd)
 // Llenar estructura t_shell
 void fill_struct(t_shell *data)
 {
+    printf("Filling shell commands...\n");
     while (data->token)
     {
-        if (data->token->type != PIPE)
-            add_cmd_to_shell(&data->cmd, &data->token);
-        else if (data->token->type == PIPE)
-            data->token = data->token->next;
+        if (data->token->type != PIPE){
+            printf("Adding command to shell...\n");
+            add_cmd_to_shell(&data->cmd, &data->token);}
+        else if (data->token->type == PIPE){
+            printf("Found PIPE, moving to next token...\n");
+            data->token = data->token->next;}
     }
 }

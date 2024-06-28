@@ -122,6 +122,7 @@ void print_cmd_list(t_cmd *cmd)
             printf("Arg[%d]: %s\n", count, cmd->arg[count]);
             count++;
         }
+        printf("Count de arg: &d\n", count);
         printf("N_args: %d\n", cmd->n_args);
         printf("FD_IN: %d\n", cmd->fdin);
         printf("FD_OUT: %d\n", cmd->fdout);

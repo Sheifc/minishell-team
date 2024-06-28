@@ -25,6 +25,15 @@ void save_outfile(t_cmd *cmd, t_token **tok)
     *tok = (*tok)->next;
 }
 
+void save_append(t_cmd *cmd, t_token **tok)
+{
+    (*tok) = (*tok)->next;
+    cmd->fdout = open((*tok)->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    if(cmd->fdout == -1)
+        perror("Error opening append file");
+    (*tok) = (*tok)->next;
+}
+
 void ft_innout(t_cmd *cmd, t_token **tok)
 {
     if (cmd == NULL || tok == NULL) 
@@ -37,10 +46,7 @@ void ft_innout(t_cmd *cmd, t_token **tok)
     else if((*tok)->type == OUT)
         save_outfile(cmd, tok);
     else if((*tok)->type == APPEND)
-    {
-        printf("append\n");
-        (*tok) = (*tok)->next;
-    }
+        save_append(cmd, tok);
     else if((*tok)->type == HEREDOC)
         save_heredoc(cmd, tok);
 }
