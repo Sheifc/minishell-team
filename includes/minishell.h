@@ -79,9 +79,13 @@ char *replace_dollar(char *str, t_env *env);
 //*--------------------FILL_STRUCT--------------------------
 void	fill_struct(t_shell *data);
 int syntaxis_is_ok(t_token **token);
+t_cmd	*list_empty_fill(t_token **token, int argcs);
+void	add_back_fill(t_cmd **lst, t_cmd *new);
+t_cmd	*ft_last_fill(t_cmd *lst);
 
-//*--------------------FDS-------------------------------
+//*--------------------FDS----------------------------------
 void ft_innout(t_cmd *cmd, t_token **tok);
-
+char	*expand_heredoc(char *line);
+char *expand_utils(char *line, char *temp, int *i, int *temp_len);
 
 #endif

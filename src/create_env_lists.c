@@ -45,5 +45,5 @@ void	create_env_list(char *value, t_env **env, char *key)
 		add_back_parser(env, aux);
 	}
 	free(value);
-    free(key);
+	free(key);
 }

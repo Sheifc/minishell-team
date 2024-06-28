@@ -26,6 +26,8 @@ FILES_SRC		= main.c 				\
 					fill_struct.c		\
 					syntaxis.c			\
 					file_des.c			\
+					fill_utils.c		\
+					expand_utils.c		\
 
 SRC 			= $(addprefix $(SRC_DIR),$(FILES_SRC))
 OBJ_SRC 		= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
