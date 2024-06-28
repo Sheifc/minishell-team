@@ -4,8 +4,8 @@ LIBS            = -lft -lreadline
 NAME            = minishell
 
 CC              = gcc
-CFLAGS          = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address
-#LDFLAGS        = -fsanitize=address
+CFLAGS          = -Wall -Werror -Wextra -Iincludes -g -fsanitize=address
+LDFLAGS        = -fsanitize=address
 RM              = rm -rf
 
 SRC_DIR         = src/
