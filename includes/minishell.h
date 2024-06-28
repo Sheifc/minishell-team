@@ -105,6 +105,9 @@ void	expand_variables(t_token **token, char **envp, t_env *env);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
 char    *replace_dollar(char *str, t_env *env);
+// expand_utils.c
+char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
+char    *expand_heredoc(char *line);
 
 //*--------------------FILL_STRUCT--------------------------
 // fill_struct.c

@@ -26,6 +26,7 @@ FILES_PARSER    = parser_main.c    \
                   quote_stuff.c    \
                   utils1.c         \
                   expand_variables.c\
+				  expand_utils.c	\
                   create_env_lists.c\
                   exp_utils.c      \
                   fill_struct.c    \
