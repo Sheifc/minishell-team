@@ -32,9 +32,10 @@ int main(int argc, char **argv, char **envp)
         lexer(data.str_cmd, &data.token);
         if (data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
+            expand_variables(&data.token, data.env);
             fill_struct(&data);
             executor(&data);
-            clear_structs(&data.token, &data.cmd);  // Liberar estructuras después de ejecutar los comandos
+            clear_structs(&data.token, &data.cmd);
         }
         free(data.str_cmd);
         data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
