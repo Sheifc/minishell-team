@@ -42,7 +42,7 @@ void executor(t_shell *msh)
         if (!execute_builtin(msh))
         {
             msh->pid = fork();
-            if (msh->pid == 0)  // Child process
+            if (msh->pid == 0)
             {
                 get_path(msh);
                 if (!msh->path)
@@ -51,19 +51,13 @@ void executor(t_shell *msh)
                 perror("exec");
                 exit(1);
             }
-            else  // Parent process
-            {
-                //waitpid(ret, NULL, 0);// Close the write end of the pipe in the parent
-                wait_for_last_process(msh);
-                if (msh->cmd->next != NULL)
-                    close(fdpipe[1]);
-            }
         }
         msh->cmd = msh->cmd->next;
     }
+    //wait_for_last_process(msh);
+    waitpid(msh->pid, NULL, 0);
     dup2(tmpin, 0);
     dup2(tmpout, 1);
     close(tmpin);
     close(tmpout);
-    printf("%d\n",msh->status);
 }
