@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 // ***EXECUTOR***
 //*--------------------BUILTINS----------------------------
@@ -28,6 +29,7 @@
 // exec_builtins.c
 int	    execute_builtin(t_shell *data);
 // cd.c
+t_env   *env_lst_search(t_env *env, const char *key);
 void	ft_cd(t_shell *data);
 // echo.c
 void	ft_echo(t_cmd *args);
@@ -39,7 +41,7 @@ void	ft_export(t_shell *data);
 void	ft_exit(t_cmd *cmd);
 // pwd.c
 char	*get_current_directory(void);
-int		ft_pwd(void);
+void	ft_pwd(void);
 // unset.c
 void	ft_unset(t_shell *data);
 
@@ -51,10 +53,12 @@ void	init_env(t_shell *data, char **envp);
 // list_utils.c
 void	add(t_env **head, char *key, char *value);
 void	pop(t_env **head, char *key);
+void    ft_pop(t_env **head, char *str);
 // key_value.c
 void	get_key_value(char *str, char **key, char **value);
-char	*get_value(t_env *env, char *key);
-void	update_list(t_env **env, char *key, char *value);
+char	*get_value(t_env *env, const char *key);
+char    *get_cd_value(t_env *env, const char *key);
+//void	update_env(t_env **env, char *key, char *value);
 
 //*--------------------EXECUTOR----------------------------
 // path.c
@@ -101,7 +105,7 @@ void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 // expand_variables.c
-void	expand_variables(t_token **token, char **envp, t_env *env);
+void    expand_variables(t_token **token, t_env *env);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
 char    *replace_dollar(char *str, t_env *env);

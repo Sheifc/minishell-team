@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int isnum(char *str)
+static int  isnum(char *str)
 {
-    if (!str || str == (void *)0) // '\0'
+    if (!str || str == (void *)0)
         return (-1);
     if (*str == '-' || *str == '+')
         str++;

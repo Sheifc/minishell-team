@@ -47,7 +47,11 @@ void	init_struct(t_shell *data, char **envp)
 	data->cmd = NULL;
     data->env = NULL;
     data->export = NULL;
+    data->str_cmd = NULL;
     data->envp = envp;
+    data->path = NULL;
+    data->status = 0;
+    data->pid = 0;
 }
 
 /* int	main(int argc, char **argv, char **envp)

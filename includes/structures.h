@@ -40,10 +40,10 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_env	*env;
-	t_cmd	*cmd;
-    t_env   *export;
     t_token *token;
+    t_cmd	*cmd;
+	t_env	*env;
+    t_env   *export;
     char    *str_cmd;
     char    **envp;
     char	*path;

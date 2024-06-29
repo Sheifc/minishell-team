@@ -27,14 +27,12 @@ FILES_PARSER    = parser_main.c    \
                   utils1.c         \
                   expand_variables.c\
 				  expand_utils.c	\
-                  create_env_lists.c\
                   exp_utils.c      \
                   fill_struct.c    \
                   syntaxis.c       \
                   file_des.c
 
-FILES_EXEC      = exec_main.c      \
-                  exec_builtins.c  \
+FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
                   free.c           \
                   list_utils.c     \

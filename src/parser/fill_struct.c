@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// Funciones auxiliares
 t_cmd *get_last_cmd(t_cmd *lst)
 {
     if (!lst)
@@ -19,12 +18,11 @@ void add_cmd_to_list(t_cmd **lst, t_cmd *new)
         last->next = new;
 }
 
-// Crear y llenar nodo de comando
 t_cmd *create_cmd_node(void)
 {
     t_cmd *node = (t_cmd *)malloc(sizeof(t_cmd));
     if (!node)
-        return NULL;
+        return (NULL);
     node->arg = NULL; // Inicializar como NULL
     node->fdin = -1;
     node->fdout = -1;
@@ -41,21 +39,26 @@ void handle_redirection(t_cmd *cmd, t_token **token)
         *token = (*token)->next;
 }
 
-void add_argument(t_cmd *cmd, char *arg)
+void    add_argument(t_cmd *cmd, char *arg)
 {
-    char **new_arg;
+    char    **new_arg;
+    int i;
     
+    i = 0;
     new_arg = (char **)malloc(sizeof(char *) * (cmd->n_args + 2)); // +2 para el nuevo argumento y NULL al final
     if (!new_arg)
     {
         perror("Error allocating memory");
         exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < cmd->n_args; i++)
+    while (i < cmd->n_args)
+    {
         new_arg[i] = cmd->arg[i];
-    new_arg[cmd->n_args] = ft_strdup(arg); // Usar strdup en lugar de ft_strdup
+        i++;
+    }
+    new_arg[cmd->n_args] = ft_strdup(arg);
     new_arg[cmd->n_args + 1] = NULL;
-    free(cmd->arg); // Liberar la memoria anterior
+    free(cmd->arg);
     cmd->arg = new_arg;
     cmd->n_args++;
 }
@@ -88,38 +91,13 @@ void add_cmd_to_shell(t_cmd **cmd_list, t_token **token)
     }
 }
 
-// Imprimir lista de comandos
-void print_cmd_list(t_cmd *cmd)
-{
-    int count;
-    if (cmd == NULL)
-        return;
-    while (cmd)
-    {
-        count = 0;
-        while (cmd->arg[count])
-        {
-            printf("Arg[%d]: %s\n", count, cmd->arg[count]);
-            count++;
-        }
-        printf("N_args: %d\n", cmd->n_args);
-        printf("FD_IN: %d\n", cmd->fdin);
-        printf("FD_OUT: %d\n", cmd->fdout);
-        cmd = cmd->next;
-    }
-}
-
-// Llenar estructura t_shell
 void fill_struct(t_shell *data)
 {
-    printf("Filling shell commands...\n");
     while (data->token)
     {
         if (data->token->type != PIPE){
-            printf("Adding command to shell...\n");
             add_cmd_to_shell(&data->cmd, &data->token);}
         else if (data->token->type == PIPE){
-            printf("Found PIPE, moving to next token...\n");
             data->token = data->token->next;}
     }
 }

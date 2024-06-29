@@ -30,7 +30,7 @@ void    pop(t_env **head, char *key)
 
     if (current == NULL)
         return ;
-    if (ft_strncmp(current->key, key, ft_strlen(key)+1) == 0)
+    if (!ft_strncmp(current->key, key, ft_strlen(key) + 1))
     {
         temp = current;
         *head = current->next;
@@ -41,7 +41,7 @@ void    pop(t_env **head, char *key)
     current = current->next;
     while (current != NULL)
     {
-        if (ft_strncmp(current->key, key, ft_strlen(key)+1) == 0)
+        if (!ft_strncmp(current->key, key, ft_strlen(key) + 1))
         {
             prev->next = current->next;
             free_env_node(&current);

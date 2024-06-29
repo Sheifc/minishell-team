@@ -2,12 +2,10 @@
 
 static void print_args(t_cmd *args, int i, int newline)
 {
-    printf("entra en print_Args\n");
     while (args->arg[i])
     {
-        printf("entra en el bucle\n");
         printf("%s", args->arg[i]);
-        if (args->arg[i + 1]) //comprueba si hay otro arg despues del actual y sino es asi, no imprime el espacio
+        if (args->arg[i + 1])
             printf(" ");
         i++;
     }
@@ -17,10 +15,10 @@ static void print_args(t_cmd *args, int i, int newline)
 
 void	ft_echo(t_cmd *args)
 {
-    int i; //comando
-    int j; //caracter dentro del comando
-    int newline; // flag para la presencia de \n x defecto está presente, si tuviera la flag -n, el \n desaparece
-    printf("entra en ft_echo\n");
+    int i;
+    int j;
+    int newline;
+
     i = 1;
     j = 1;
     newline = 1;
@@ -29,7 +27,7 @@ void	ft_echo(t_cmd *args)
         i++;
         while (args->arg[1][j] == 'n')
         {
-            newline = 0; //eliminamos \n si hay -n
+            newline = 0;
             j++;
         }
         if (args->arg[1][j] != '\0')
@@ -41,4 +39,3 @@ void	ft_echo(t_cmd *args)
     }
     print_args(args, i, newline);
 }
-// echo $user imprime pgonzal en bash gestión del parser cuando trate la expansión de variables

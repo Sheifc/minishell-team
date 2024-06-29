@@ -11,7 +11,7 @@ void    wait_for_last_process(t_shell *data)
     }
 }
 
-void executor(t_shell *msh)
+void executor(t_shell *data)
 {
     int tmpin;
     int tmpout;
@@ -20,42 +20,42 @@ void executor(t_shell *msh)
     tmpin = dup(0);
     tmpout = dup(1);
 
-    if (msh->cmd->fdin == -1)
-        msh->cmd->fdin = dup(tmpin); 
-    while (msh->cmd != NULL)
+    if (data->cmd->fdin == -1)
+        data->cmd->fdin = dup(tmpin); 
+    while (data->cmd != NULL)
     {
-        dup2(msh->cmd->fdin, 0);
-        close(msh->cmd->fdin);
-        if (msh->cmd->next == NULL)
+        dup2(data->cmd->fdin, 0);
+        close(data->cmd->fdin);
+        if (data->cmd->next == NULL)
         {
-            if (msh->cmd->fdout == -1)
-                msh->cmd->fdout = dup(tmpout);
+            if (data->cmd->fdout == -1)
+                data->cmd->fdout = dup(tmpout);
         }
         else
         {
             pipe(fdpipe);
-            msh->cmd->fdout = fdpipe[1];
-            msh->cmd->next->fdin = fdpipe[0];
+            data->cmd->fdout = fdpipe[1];
+            data->cmd->next->fdin = fdpipe[0];
         }
-        dup2(msh->cmd->fdout, 1);
-        close(msh->cmd->fdout);
-        if (!execute_builtin(msh))
+        dup2(data->cmd->fdout, 1);
+        close(data->cmd->fdout); //
+        if (!execute_builtin(data))
         {
-            msh->pid = fork();
-            if (msh->pid == 0)
+            data->pid = fork();
+            if (data->pid == 0)
             {
-                get_path(msh);
-                if (!msh->path)
+                get_path(data);
+                if (!data->path)
                     return (void)perror("path");
-                execve(msh->path, msh->cmd->arg, msh->envp);
+                execve(data->path, data->cmd->arg, data->envp);
                 perror("exec");
                 exit(1);
             }
         }
-        msh->cmd = msh->cmd->next;
+        data->cmd = data->cmd->next;
     }
-    //wait_for_last_process(msh);
-    waitpid(msh->pid, NULL, 0);
+    //wait_for_last_process(data);
+    waitpid(data->pid, NULL, 0);
     dup2(tmpin, 0);
     dup2(tmpout, 1);
     close(tmpin);

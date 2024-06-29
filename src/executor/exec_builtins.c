@@ -4,9 +4,8 @@ int	execute_builtin(t_shell *data)
 {
 	if (data->cmd->n_args == 0)
 		ft_error("Error: No arguments given");
-	if (ft_strncmp(data->cmd->arg[0], "echo", 4) == 0){
-        printf("entra en echo\n");
-		return (ft_echo(data->cmd), 1);}
+	if (ft_strncmp(data->cmd->arg[0], "echo", 4) == 0)
+		return (ft_echo(data->cmd), 1);
     else if(ft_strncmp(data->cmd->arg[0], "pwd", 3) == 0)
 		return (ft_pwd(), 1);
 	else if(ft_strncmp(data->cmd->arg[0], "cd", 2) == 0)
@@ -19,7 +18,6 @@ int	execute_builtin(t_shell *data)
 		return (ft_env(data->env), 1);
 	else if(ft_strncmp(data->cmd->arg[0], "exit", 4) == 0)
 		return (ft_exit(data->cmd), 1);
-	else{
-        printf("da cero\n");
-		return (0);}
+	else
+		return (0);
 }

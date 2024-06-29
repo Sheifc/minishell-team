@@ -10,12 +10,11 @@ char    *get_current_directory(void)
     return (path);
 }
 
-int ft_pwd(void)
+void    ft_pwd(void)
 {
     char    *path;
 
     path = get_current_directory();
     printf("%s\n", path);
     free(path);
-    return (0);
 }
