@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 // ***EXECUTOR***
 //*--------------------BUILTINS----------------------------
@@ -114,7 +115,7 @@ char    *expand_heredoc(char *line);
 void    print_cmd_list(t_cmd *cmd);
 void	fill_struct(t_shell *data);
 // syntaxis.c
-int     syntaxis_is_ok(t_token **token);
+int     syntaxis_is_ok(t_token **token, t_shell *data);
 // parser_main.c
 int     only_spaces(char *str_cmd);
 void    clear_structs(t_token **token, t_cmd **cmd);
