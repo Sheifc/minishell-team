@@ -7,14 +7,14 @@ int is_there_a_dollar(char *str)
     i = 0;
     while(str[i] != '\0')
     {
-        if(str[i] == '$')
+        if(str[i] == '$' || str[i] == '-' || str[i] == '~')
             return (1);
         i++;
     }
     return (0);
 }
 
-char *replace_dollar(char *str, t_env *env)
+char *replace_dollar(char *str, t_env *env, t_shell *data)
 {
     int i;
     int j;
@@ -28,25 +28,25 @@ char *replace_dollar(char *str, t_env *env)
     while(str[i])
     {
         aux_env = env;
-        if(str[i] != '$')
+        if(str[i] != '$' && str[i] != '-' && str[i] != '~')
             final[i] = str[i];
+        if(str[i] == '-' || str[i] == '~')
+            return(getenv("HOME"));
         if(str[i] == '$')
         {
             i++;
+            if(str[i] == '?' && str[i + 1] == '\0')
+                return(ft_itoa(data->status));
             j = 0;
             while (str[i] && (ft_isalnum(str[i]) || str[i] == '_')) 
-            {
-                aux[j] = str[i];
-                j++;
-                i++;
-            }
+                aux[j++] = str[i++];
             aux[j] = '\0';
             while(aux_env)
             {
-                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux_env->key) + ft_strlen(aux)) == 0)
+                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux_env->key) + ft_strlen(aux) + 1) == 0)
                 {
+                    printf("%s", final);
                     final = ft_strjoin(final, aux_env->value);
-                    break;
                 }
                 aux_env = aux_env->next;
             }

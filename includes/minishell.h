@@ -101,10 +101,10 @@ void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 // expand_variables.c
-void	expand_variables(t_token **token, t_env *env);
+void	expand_variables(t_token **token, t_env *env, t_shell *data);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
-char    *replace_dollar(char *str, t_env *env);
+char    *replace_dollar(char *str, t_env *env, t_shell *data);
 // expand_utils.c
 char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
 char    *expand_heredoc(char *line);

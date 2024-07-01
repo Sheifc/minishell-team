@@ -36,7 +36,6 @@ t_cmd *create_cmd_node(void)
 void handle_redirection(t_cmd *cmd, t_token **token)
 {
     ft_innout(cmd, token);
-    // Saltar el siguiente token si es un argumento de la redirección
     if (*token && (*token)->type == WORD)
         *token = (*token)->next;
 }
@@ -44,18 +43,23 @@ void handle_redirection(t_cmd *cmd, t_token **token)
 void add_argument(t_cmd *cmd, char *arg)
 {
     char **new_arg;
-    
-    new_arg = (char **)malloc(sizeof(char *) * (cmd->n_args + 2)); // +2 para el nuevo argumento y NULL al final
+    int i;
+
+    i = 0;
+    new_arg = (char **)malloc(sizeof(char *) * (cmd->n_args + 2));
     if (!new_arg)
     {
         perror("Error allocating memory");
         exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < cmd->n_args; i++)
+    while(i < cmd->n_args)
+    {
         new_arg[i] = cmd->arg[i];
-    new_arg[cmd->n_args] = ft_strdup(arg); // Usar strdup en lugar de ft_strdup
+        i++;
+    }
+    new_arg[cmd->n_args] = ft_strdup(arg);
     new_arg[cmd->n_args + 1] = NULL;
-    free(cmd->arg); // Liberar la memoria anterior
+    free(cmd->arg);
     cmd->arg = new_arg;
     cmd->n_args++;
 }
@@ -91,14 +95,11 @@ void add_cmd_to_shell(t_cmd **cmd_list, t_token **token)
 // Llenar estructura t_shell
 void fill_struct(t_shell *data)
 {
-    printf("Filling shell commands...\n");
     while (data->token)
     {
-        if (data->token->type != PIPE){
-            printf("Adding command to shell...\n");
-            add_cmd_to_shell(&data->cmd, &data->token);}
-        else if (data->token->type == PIPE){
-            printf("Found PIPE, moving to next token...\n");
-            data->token = data->token->next;}
+        if (data->token->type != PIPE)
+            add_cmd_to_shell(&data->cmd, &data->token);
+        else if (data->token->type == PIPE)
+            data->token = data->token->next;
     }
 }
