@@ -4,7 +4,7 @@ void    wait_for_last_process(t_shell *data)
 {
     int status; 
 
-    while ((data->pid = wait(&status)) > 0)
+    while ((data->pid = wait(&status)) > 0) //$?
     {
         if (WIFEXITED(status))
             data->status = WEXITSTATUS(status);
@@ -19,11 +19,11 @@ void executor(t_shell *data)
 
     tmpin = dup(0);
     tmpout = dup(1);
-
     if (data->cmd->fdin == -1)
         data->cmd->fdin = dup(tmpin); 
     while (data->cmd != NULL)
     {
+        
         dup2(data->cmd->fdin, 0);
         close(data->cmd->fdin);
         if (data->cmd->next == NULL)
@@ -38,7 +38,7 @@ void executor(t_shell *data)
             data->cmd->next->fdin = fdpipe[0];
         }
         dup2(data->cmd->fdout, 1);
-        close(data->cmd->fdout); //
+        close(data->cmd->fdout);
         if (!execute_builtin(data))
         {
             data->pid = fork();
@@ -49,13 +49,15 @@ void executor(t_shell *data)
                     return (void)perror("path");
                 execve(data->path, data->cmd->arg, data->envp);
                 perror("exec");
-                exit(1);
             }
+            // if (flag){
+            //     wait_for_last_process(data);
+            //     flag = 0;}
         }
         data->cmd = data->cmd->next;
     }
-    //wait_for_last_process(data);
-    waitpid(data->pid, NULL, 0);
+    //waitpid(data->pid, NULL, 0); // funciona para el cat /dev/random | head
+    wait_for_last_process(data); // funciona para el cat | cat | ls haciendo cat inv imprimiendo ls inicial, cierra los cats, pero peta el random 
     dup2(tmpin, 0);
     dup2(tmpout, 1);
     close(tmpin);

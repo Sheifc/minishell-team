@@ -21,7 +21,7 @@ void	ft_exit(t_cmd *cmd)
 
     exit_code = 1;
     if (cmd->n_args > 2)
-        ft_error("exit: too many arguments\n");
+        ft_error("exit: too many arguments\n", 0);
     else if (cmd->n_args == 2)
     {
         if (isnum(cmd->arg[1]) == 0)

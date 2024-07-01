@@ -53,7 +53,6 @@ void	init_env(t_shell *data, char **envp);
 // list_utils.c
 void	add(t_env **head, char *key, char *value);
 void	pop(t_env **head, char *key);
-void    ft_pop(t_env **head, char *str);
 // key_value.c
 void	get_key_value(char *str, char **key, char **value);
 char	*get_value(t_env *env, const char *key);
@@ -70,8 +69,7 @@ void	executor(t_shell *data);
 // exec_utils.c
 void	ft_swap(char **a, char **b);
 // error.c
-void	ft_error(char *msg);
-void	print_error(char *msg);
+int     ft_error(char *msg, int num);
 // free.c
 void	free_env_list(t_env *head);
 void	free_env_node(t_env **node);

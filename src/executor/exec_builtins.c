@@ -3,7 +3,7 @@
 int	execute_builtin(t_shell *data)
 {
 	if (data->cmd->n_args == 0)
-		ft_error("Error: No arguments given");
+		ft_error("Error: No arguments given", 0);
 	if (ft_strncmp(data->cmd->arg[0], "echo", 4) == 0)
 		return (ft_echo(data->cmd), 1);
     else if(ft_strncmp(data->cmd->arg[0], "pwd", 3) == 0)

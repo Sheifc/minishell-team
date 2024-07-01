@@ -6,7 +6,7 @@ char    *get_current_directory(void)
     
     path = getcwd(NULL, 0);
     if (!path)
-        ft_error("Error: getcwd failed\n");
+        ft_error("Error: getcwd failed\n", 0);
     return (path);
 }
 

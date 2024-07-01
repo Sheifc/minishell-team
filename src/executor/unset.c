@@ -10,9 +10,9 @@ void	ft_unset(t_shell *data)
     {
         str = data->cmd->arg[i];
         //printf("env1: %s\n", data->env->key);
-        ft_pop(&data->env, str);
+        pop(&data->env, str);
         //printf("env1: %s\n", data->env->key);
-        ft_pop(&data->export, str);
+        pop(&data->export, str);
         i++;
     }
     //print_list(data->env);

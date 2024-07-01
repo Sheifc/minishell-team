@@ -32,7 +32,7 @@ void	get_path(t_shell *data)
 	char	*value;
 
     if (data->cmd == NULL || data->cmd->arg == NULL || data->cmd->arg[0] == NULL)
-        ft_error("Error: command not given");
+        ft_error("Error: command not given", 0);
     if (access(data->cmd->arg[0], X_OK) == 0)
     {
         data->path = data->cmd->arg[0];
@@ -40,14 +40,14 @@ void	get_path(t_shell *data)
     }
     value = get_value(data->env, "PATH");
 	if (!value)
-		ft_error("Error: env variable PATH not found");
+		ft_error("Error: env variable PATH not found", 0);
 	path_splitted = ft_split(value, ':');
     if (!path_splitted)
-        ft_error("Error: path was not possible to split");
+        ft_error("Error: path was not possible to split", 0);
     if (!find_command_path(path_splitted, data->cmd->arg[0], &(data->path)))
     {
         ft_free_matrix(path_splitted);
-        ft_error("Error: command not found");
+        ft_error("Error: command not found", 0);
     }
     ft_free_matrix(path_splitted);
     //printf("path: %s", data->path);
