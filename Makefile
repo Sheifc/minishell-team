@@ -17,21 +17,22 @@ OBJ_PARSER_DIR  = $(OBJ_DIR)parser/
 
 FILES_SRC       = main.c
 
-FILES_PARSER    = parser_main.c    \
-                  lexer.c          \
-                  tokenizator.c    \
-                  setter.c         \
-                  create_lists.c   \
-                  printer.c        \
-                  quote_stuff.c    \
-                  utils1.c         \
-                  expand_variables.c\
-				  expand_utils.c	\
-                  create_env_lists.c\
-                  exp_utils.c      \
-                  fill_struct.c    \
-                  syntaxis.c       \
-                  file_des.c
+FILES_PARSER    = parser_main.c         \
+                  lexer.c               \
+                  tokenizator.c         \
+                  setter.c              \
+                  create_lists.c        \
+                  printer.c             \
+                  quote_stuff.c         \
+                  utils1.c              \
+                  expand_variables.c    \
+				  expand_utils.c	    \
+                  create_env_lists.c    \
+                  exp_utils.c           \
+                  fill_struct.c         \
+                  syntaxis.c            \
+                  file_des.c            \
+                  hdoc_utils.c          \
 
 FILES_EXEC      = exec_main.c      \
                   exec_builtins.c  \

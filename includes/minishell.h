@@ -124,6 +124,8 @@ void	init_struct(t_shell *data, char **envp);
 //*--------------------FDS-------------------------------
 // file_des.c
 void    ft_innout(t_cmd *cmd, t_token **tok);
+// hdoc_utils.c
+void write_heredoc(char *expanded_line, t_cmd *cmd);
 
 
 #endif

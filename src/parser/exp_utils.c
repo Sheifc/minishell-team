@@ -28,10 +28,10 @@ char	*replace_dollar(char *str, t_env *env, t_shell *data)
 	while (str[i])
 	{
 		aux_env = env;
-		if (str[i] != '$' && str[i] != '-' && str[i] != '~')
-			final[i] = str[i];
-		if (str[i] == '-' || str[i] == '~')
+		if ((str[i] == '-' || str[i] == '~') && str[i + 1] == '\0')
 			return (getenv("HOME"));
+		if (str[i] != '$')
+			final[i] = str[i];
 		if (str[i] == '$')
 		{
 			i++;
@@ -53,5 +53,6 @@ char	*replace_dollar(char *str, t_env *env, t_shell *data)
 			i++;
 	}
 	free(aux);
+	final[i] = '\0';
 	return (final);
 }

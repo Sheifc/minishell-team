@@ -4,26 +4,29 @@ void	save_heredoc(t_cmd *cmd, t_token **tok)
 {
 	char	*line;
 	char	*expanded_line;
+	int		i;
 
-	*tok = (*tok)->next;
-	cmd->fdin = open("heredoc", O_WRONLY | O_CREAT, 0644);
+	i = 1;
+	cmd->fdin = open("hdoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (cmd->fdin == -1)
 		printf("Error making HEREDOC\n");
-	line = readline("> ");
-	while (line)
+	while (1)
 	{
+		line = readline("> ");
+		if(line == NULL)
+		{	
+			printf("bash: aviso: el heredoc en la línea %d está delimitado por end-of-file (se esperaba «%s»)\n", i, (*tok)->content);
+			break;
+		}
+		i++;
 		add_history(line);
 		expanded_line = expand_heredoc(line);
 		if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content)
 				+ 1) == 0)
 			break ;
-		write(cmd->fdin, expanded_line, ft_strlen(expanded_line));
-		write(cmd->fdin, "\n", 1);
+		write_heredoc(expanded_line, cmd);
 		free(line);
-		line = readline("> ");
 	}
-	*tok = (*tok)->next;
-	unlink("heredoc");
 }
 
 void	save_append(t_cmd *cmd, t_token **tok)
@@ -69,5 +72,11 @@ void	ft_innout(t_cmd *cmd, t_token **tok)
 	else if ((*tok)->type == APPEND)
 		save_append(cmd, tok);
 	else if ((*tok)->type == HEREDOC)
+	{
+		*tok = (*tok)->next;
 		save_heredoc(cmd, tok);
+		*tok = (*tok)->next;
+		unlink("hdoc.tmp");
+		cmd->fdin = open("hdoc.tmp", O_RDONLY);
+	}
 }

@@ -1,11 +1,5 @@
 #include "minishell.h"
 
-void is_line_empty(char *str)
-{
-    free(str);
-    str = readline(M "Mini" W "shell" G "--> " RST);
-}
-
 void sigint_handler(int signum)
 {
     (void)signum;
@@ -21,13 +15,6 @@ void ft_exit_signal(void)
     exit(0);
 }
 
-void sigquit_handler(int signum)
-{
-    (void)signum;
-    printf("SIGQUIT caught cleaning and exiting\n");
-    exit(0);
-}
-
 int main(int argc, char **argv, char **envp)
 {
     t_shell data;
@@ -35,19 +22,16 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     signal(SIGINT, sigint_handler);
-    signal(SIGQUIT, sigquit_handler);
     init_struct(&data, envp);
     init_env(&data, envp);
     while (1)
     {
-        data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
+        data.str_cmd = readline(M "Mini" W "shell🐚" G "--> " RST);
         if(data.str_cmd == NULL)
             ft_exit_signal();
         add_history(data.str_cmd);
-        if (!ft_strlen(data.str_cmd) || only_spaces(data.str_cmd) == 1)
-            is_line_empty(data.str_cmd);
         lexer(data.str_cmd, &data.token);
-        if (data.token != NULL && syntaxis_is_ok(&data.token, &data) == 1)
+        if (data.token != NULL && syntaxis_is_ok(&data.token, &data) == 1 && ft_strlen(data.str_cmd) && only_spaces(data.str_cmd) == 0)
         {
             expand_variables(&data.token, data.env, &data);
             fill_struct(&data);
