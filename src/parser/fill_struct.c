@@ -78,7 +78,11 @@ int fill_cmd_args(t_cmd *cmd, t_token **token)
     while (*token && (*token)->type != PIPE)
     {
         if ((*token)->type == IN || (*token)->type == OUT || (*token)->type == APPEND || (*token)->type == HEREDOC)
+        {
             status = handle_redirection(cmd, token);
+            if (status != 0)
+                break; // Salir si hay un error en la redirección
+        }
         else if ((*token)->type == WORD || (*token)->type == QUOTE || (*token)->type == DQUOTE)
         {
             add_argument(cmd, (*token)->content);
@@ -86,8 +90,6 @@ int fill_cmd_args(t_cmd *cmd, t_token **token)
         }
         else
             *token = (*token)->next; // Avanzar al siguiente token si no es un argumento o redirección
-        if (status != 0)
-            break; // Salir si hay un error en la redirección
     }
     return status;
 }
@@ -122,9 +124,7 @@ void fill_struct(t_shell *data)
             }
         }
         else if (data->token->type == PIPE)
-        {
             data->token = data->token->next;
-        }
     }
 }
 
