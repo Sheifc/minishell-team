@@ -56,14 +56,14 @@ static void    update_variables(char *new_pwd, char *old_pwd, t_shell *data)
     if (!new_pwd)
     {
         free(old_pwd);
-        ft_error("Error obteniendo el nuevo directorio", 0);
+        ft_error("Error getting the new directory", 0);
     }
     if (!update_pwd_oldpwd(data->env, "OLDPWD", old_pwd) || 
         !update_pwd_oldpwd(data->export, "OLDPWD", old_pwd))
     {
         free(old_pwd);
         free(new_pwd);
-        ft_error("Error actualizando OLDPWD", 0);
+        ft_error("Error updating OLDPWD", 0);
     }
     if (!update_pwd_oldpwd(data->env, "PWD", new_pwd) || 
         !update_pwd_oldpwd(data->export, "PWD", new_pwd))

@@ -52,10 +52,4 @@ typedef struct s_shell
 }	t_shell;
 
 
-typedef struct s_signal
-{
-	int		exit_status;
-	pid_t	pid;
-}	t_signal;
-
 #endif

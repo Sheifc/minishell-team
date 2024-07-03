@@ -16,9 +16,11 @@ int main(int argc, char **argv, char **envp)
     //rl_catch_signals = 0;
     init_struct(&data, envp);
     init_env(&data, envp);
-    data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
-    while (data.str_cmd)
+    while (1)
     {
+        data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
+        if (!data.str_cmd)
+            break ;
         add_history(data.str_cmd);
         handle_empty_or_whitespace_commands(&data.str_cmd);
         lexer(data.str_cmd, &data.token);
@@ -26,12 +28,14 @@ int main(int argc, char **argv, char **envp)
         {
             expand_variables(&data.token, data.env);
             fill_struct(&data);
-            //print_cmd_list(data.cmd);
-            executor(&data);
-            clear_structs(&data.token, &data.cmd);
+            if (data.cmd != NULL)
+            {
+                executor(&data);
+                clear_structs(&data.token, &data.cmd);
+            }
         }
         free(data.str_cmd);
-        data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
+        data.str_cmd = NULL;
     }
     free_all(data);
     return ((void)argc, (void)argv, 0);

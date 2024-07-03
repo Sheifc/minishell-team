@@ -1,9 +1,7 @@
 #include "minishell.h"
-```c
-void    setup_input(t_cmd *cmd, int tmpin)
+
+void    setup_input(t_cmd *cmd)
 {
-/*     if (cmd->fdin == -1)
-        cmd->fdin = dup(tmpin); */
     if (cmd->fdin != -1)
     {
         if (dup2(cmd->fdin, 0) == -1)
@@ -24,8 +22,9 @@ void    setup_output(t_cmd *cmd, int tmpout, int fdpipe[2])
     }
     else
     {
-        if (pipe(fdpipe) == -1)
-            ft_error("Error: Pipe failed");
+        if (pipe(fdpipe) == -1){
+            ft_error("Error: Pipe failed", 0);
+            exit(1);}
         fdout = fdpipe[1];
         cmd->next->fdin = fdpipe[0];
     }
@@ -47,27 +46,27 @@ void print_args(char **args)
     }
 }
 
-void    child_process(t_shell *data, t_cmd *cmd)
+void    child_process(t_shell *data)
 {
     get_path(data);
-    if (!data->path)
-    {
-        ft_error("Error: path not found");
-        exit(1);
-    }
-    execve(data->path, cmd->arg, data->envp);
+    if (!data->path){
+        ft_error("Error: path not found", 0);
+        exit(1);}
+    execve(data->path, data->cmd->arg, data->envp);
+    perror("excve");
     exit(1);
 }
 
-void    execute_command(t_shell *data, t_cmd *cmd)
+void    execute_command(t_shell *data)
 {
     if (!execute_builtin(data)) 
     {
         data->pid = fork();
-        if (data->pid == -1)
-            ft_error("Error: Fork failed");
+        if (data->pid == -1){
+            ft_error("Error: Fork failed", 0);
+            exit(1);}
         else if (data->pid == 0)
-            child_process(data, cmd);
+            child_process(data);
     }
 }
 void    wait_for_last_process(t_shell *data)
@@ -86,27 +85,24 @@ void    executor(t_shell *data)
     int tmpin;
     int tmpout;
     int fdpipe[2];
-    t_cmd   *current; 
 
     tmpin = dup(0);
     tmpout = dup(1);
     if (!data->cmd)
-        ft_error("Error: not command has been given");
-    current = data->cmd;
-    if (cmd->fdin == -1)
-        cmd->fdin = dup(tmpin);
-    while (current != NULL)
+        ft_error("Error: not command has been given", 0);
+    if (data->cmd->fdin == -1)
+        data->cmd->fdin = dup(tmpin);
+    while (data->cmd != NULL)
     {
-        setup_input(current, tmpin);
-        setup_output(current, tmpout, fdpipe);
-        execute_command(data, current);
-/*      if (current->next != NULL)// Si no es el último comando, actualizar tmpin para la próxima iteración
+        setup_input(data->cmd);
+        setup_output(data->cmd, tmpout, fdpipe);
+        execute_command(data);
+        if (data->cmd->next != NULL)// Si no es el último comando, actualizar tmpin para la próxima iteración
         {
-            close(tmpin);
-            tmpin = fdpipe[0];
             close(fdpipe[1]);
-        } */
-        current = current->next;
+            tmpin = fdpipe[0];
+        }
+        data->cmd = data->cmd->next;
     }
     dup2(tmpin, 0);
     dup2(tmpout, 1);

@@ -64,6 +64,8 @@ char    *get_cd_value(t_env *env, const char *key);
 void	get_path(t_shell *data);
 // executor.c
 void	executor(t_shell *data);
+void	ft_pipex(t_shell *data);
+int     ft_start_pipex(t_shell *data);
 
 //*--------------------UTILS-------------------------------
 // exec_utils.c
@@ -115,6 +117,7 @@ char    *expand_heredoc(char *line);
 // fill_struct.c
 void    print_cmd_list(t_cmd *cmd);
 void	fill_struct(t_shell *data);
+int     handle_redirection(t_cmd *cmd, t_token **token);
 // syntaxis.c
 int     syntaxis_is_ok(t_token **token);
 // parser_main.c
@@ -124,7 +127,7 @@ void	init_struct(t_shell *data, char **envp);
 
 //*--------------------FDS-------------------------------
 // file_des.c
-void    ft_innout(t_cmd *cmd, t_token **tok);
+int    ft_innout(t_cmd *cmd, t_token **tok);
 
 
 #endif

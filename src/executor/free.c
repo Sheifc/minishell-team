@@ -24,7 +24,8 @@ void    free_env_node(t_env **node)
 
 void    free_all(t_shell data)
 {
-    free(data.str_cmd);
+    if (data.str_cmd)
+        free(data.str_cmd);
     free_env_list(data.env);
     free_env_list(data.export);
     clear_structs(&data.token, &data.cmd);

@@ -17,20 +17,22 @@ OBJ_PARSER_DIR  = $(OBJ_DIR)parser/
 
 FILES_SRC       = main.c
 
-FILES_PARSER    = parser_main.c    \
+FILES_PARSER    = init.c    	   \
+				  clear_struct.c   \
                   lexer.c          \
                   tokenizator.c    \
                   setter.c         \
                   create_lists.c   \
                   printer.c        \
                   quote_stuff.c    \
-                  utils1.c         \
+                  in_out.c         \
                   expand_variables.c\
 				  expand_utils.c	\
                   exp_utils.c      \
                   fill_struct.c    \
                   syntaxis.c       \
-                  file_des.c
+                  file_des.c       \
+				  parser_utils.c
 
 FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
