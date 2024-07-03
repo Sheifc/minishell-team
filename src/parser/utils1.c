@@ -27,3 +27,18 @@ void	append_out(char *str_cmd, t_token **tok, int *i)
 		*i += 1;
 	}
 }
+
+void	sigint_handler(int signum)
+{
+	(void)signum;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	ft_exit_signal(void)
+{
+	printf("exit\n");
+	exit(0);
+}

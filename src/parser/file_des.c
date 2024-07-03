@@ -13,17 +13,20 @@ void	save_heredoc(t_cmd *cmd, t_token **tok)
 	while (1)
 	{
 		line = readline("> ");
-		if(line == NULL)
-		{	
-			printf("bash: aviso: el heredoc en la línea %d está delimitado por end-of-file (se esperaba «%s»)\n", i, (*tok)->content);
-			break;
+		if (line == NULL)
+		{
+			printf("bash: warning: here-document at line %d delimited by (wanted «%s»)\n", i, (*tok)->content);
+			break ;
 		}
 		i++;
 		add_history(line);
 		expanded_line = expand_heredoc(line);
 		if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content)
 				+ 1) == 0)
+		{
+			free(line);
 			break ;
+		}
 		write_heredoc(expanded_line, cmd);
 		free(line);
 	}
@@ -76,7 +79,7 @@ void	ft_innout(t_cmd *cmd, t_token **tok)
 		*tok = (*tok)->next;
 		save_heredoc(cmd, tok);
 		*tok = (*tok)->next;
-		unlink("hdoc.tmp");
 		cmd->fdin = open("hdoc.tmp", O_RDONLY);
+		unlink("hdoc.tmp");
 	}
 }

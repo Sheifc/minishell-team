@@ -67,7 +67,7 @@ void	executor(t_shell *data);
 // exec_utils.c
 void	ft_swap(char **a, char **b);
 // error.c
-void	ft_error(char *msg);
+int	ft_error(char *msg);
 void	print_error(char *msg);
 // free.c
 void	free_env_list(t_env *head);
@@ -102,10 +102,10 @@ void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 // expand_variables.c
-void	expand_variables(t_token **token, t_env *env, t_shell *data);
+void	expand_variables(t_token **token);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
-char    *replace_dollar(char *str, t_env *env, t_shell *data);
+char    *replace_dollar(char *str);
 // expand_utils.c
 char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
 char    *expand_heredoc(char *line);
@@ -115,7 +115,7 @@ char    *expand_heredoc(char *line);
 void    print_cmd_list(t_cmd *cmd);
 void	fill_struct(t_shell *data);
 // syntaxis.c
-int     syntaxis_is_ok(t_token **token, t_shell *data);
+int     syntaxis_is_ok(t_token **token);
 // parser_main.c
 int     only_spaces(char *str_cmd);
 void    clear_structs(t_token **token, t_cmd **cmd);
@@ -126,6 +126,7 @@ void	init_struct(t_shell *data, char **envp);
 void    ft_innout(t_cmd *cmd, t_token **tok);
 // hdoc_utils.c
 void write_heredoc(char *expanded_line, t_cmd *cmd);
-
+void	sigint_handler(int signum);
+void	ft_exit_signal(void);
 
 #endif

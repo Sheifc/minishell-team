@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-void sigint_handler(int signum)
-{
-    (void)signum;
-    printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-}
-
-void ft_exit_signal(void)
-{
-    printf("exit\n");
-    exit(0);
-}
-
 int main(int argc, char **argv, char **envp)
 {
     t_shell data;
@@ -31,9 +16,9 @@ int main(int argc, char **argv, char **envp)
             ft_exit_signal();
         add_history(data.str_cmd);
         lexer(data.str_cmd, &data.token);
-        if (data.token != NULL && syntaxis_is_ok(&data.token, &data) == 1 && ft_strlen(data.str_cmd) && only_spaces(data.str_cmd) == 0)
+        if (data.token != NULL && syntaxis_is_ok(&data.token) == 1 && ft_strlen(data.str_cmd) && only_spaces(data.str_cmd) == 0)
         {
-            expand_variables(&data.token, data.env, &data);
+            expand_variables(&data.token);
             fill_struct(&data);
             executor(&data);
         }
