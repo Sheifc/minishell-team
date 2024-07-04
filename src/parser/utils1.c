@@ -30,11 +30,13 @@ void	append_out(char *str_cmd, t_token **tok, int *i)
 
 void	sigint_handler(int signum)
 {
-	(void)signum;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if(signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void	ft_exit_signal(void)

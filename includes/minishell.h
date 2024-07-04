@@ -23,6 +23,8 @@
 # include <unistd.h>
 # include <signal.h>
 
+extern int g_hdoc;
+
 // ***EXECUTOR***
 //*--------------------BUILTINS----------------------------
 

@@ -7,6 +7,8 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     signal(SIGINT, sigint_handler);
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGTSTP, SIG_IGN);
     init_struct(&data, envp);
     init_env(&data, envp);
     while (1)

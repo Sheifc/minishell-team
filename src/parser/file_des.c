@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int		g_hdoc = 0;
+
 void	save_heredoc(t_cmd *cmd, t_token **tok)
 {
 	char	*line;
@@ -61,8 +63,19 @@ void	save_outfile(t_cmd *cmd, t_token **tok)
 	*tok = (*tok)->next;
 }
 
+void	heredoc_handler(int signum)
+{
+	(void)signum;
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
+	exit(130);
+}
+
 void	ft_innout(t_cmd *cmd, t_token **tok)
 {
+	int	pid;
+
 	if (cmd == NULL || tok == NULL)
 	{
 		printf("Invalid pointer\n");
@@ -76,10 +89,19 @@ void	ft_innout(t_cmd *cmd, t_token **tok)
 		save_append(cmd, tok);
 	else if ((*tok)->type == HEREDOC)
 	{
+		pid = fork();
 		*tok = (*tok)->next;
-		save_heredoc(cmd, tok);
+		if (pid == 0)
+		{
+			signal(SIGINT, heredoc_handler);
+			save_heredoc(cmd, tok);
+			exit(0);
+		}
 		*tok = (*tok)->next;
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, NULL, 0);
 		cmd->fdin = open("hdoc.tmp", O_RDONLY);
 		unlink("hdoc.tmp");
+		signal(SIGINT, sigint_handler);
 	}
 }

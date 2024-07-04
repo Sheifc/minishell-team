@@ -19,7 +19,6 @@ int	execute_builtin(t_shell *data)
 		return (ft_env(data->env), 1);
 	else if(ft_strncmp(data->cmd->arg[0], "exit", 4) == 0)
 		return (ft_exit(data->cmd), 1);
-	else{
-        printf("da cero\n");
-		return (0);}
+	else
+		return (0);
 }
