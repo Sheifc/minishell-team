@@ -78,7 +78,9 @@ int     ft_error(char *msg, int num);
 // free.c
 void	free_env_list(t_env *head);
 void	free_env_node(t_env **node);
-void    free_all(t_shell data);
+void	free_token(t_token **token);
+void	free_cmd(t_cmd **cmd);
+void    free_all(t_shell *data);
 // printing.c
 void	print_key(t_env *head);
 char	*print_value(t_env *env, char *key);
@@ -144,6 +146,5 @@ int     heredoc(t_cmd *cmd, t_token **tok);
 //*--------------------SIGNALS--------------------------------
 void    init_signals();
 void	sigint_handler(int signum);
-
 
 #endif

@@ -6,50 +6,6 @@ static void	write_heredoc(char *expanded_line, t_cmd *cmd)
 	write(cmd->fdin, "\n", 1);
 }
 
-/* int save_heredoc(t_cmd *cmd, t_token **tok)
-{
-    char *line;
-
-    // Avanzar al siguiente token (el delimitador heredoc)
-    *tok = (*tok)->next;
-
-    // Crear y abrir el archivo temporal heredoc para escritura
-    cmd->fdin = open("heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (cmd->fdin == -1)
-    {
-        ft_error("Error making Heredoc\n", 1);
-        return 1; // Indicar error
-    }
-
-    // Leer líneas del input y escribirlas en el archivo hasta que se encuentre la línea delimitadora
-    line = readline("> ");
-    while (line)
-    {
-        if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content) + 1) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(cmd->fdin, line, ft_strlen(line));
-        write(cmd->fdin, "\n", 1);
-        free(line);
-        line = readline("> ");
-    }
-    close(cmd->fdin); // Cerrar el archivo temporal
-
-    // Reabrir el archivo temporal heredoc para lectura
-    cmd->fdin = open("heredoc_tmp", O_RDONLY);
-    if (cmd->fdin == -1)
-    {
-        ft_error("Error opening Heredoc for reading\n", 1);
-        return 1; // Indicar error
-    }
-
-    // Avanzar al siguiente token después del delimitador heredoc
-    *tok = (*tok)->next;
-    return 0; // Indicar éxito
-} */
-
 char	*expand_heredoc(char *line)
 {
 	char	*temp;
@@ -88,7 +44,7 @@ int	save_heredoc(t_cmd *cmd, t_token **tok)
 		line = readline("> ");
 		if (line == NULL)
 		{
-			printf("bash: warning: here-document at line %d delimited by (wanted «%s»)\n", i, (*tok)->content);
+			printf("Minishell: warning: here-document at line %d delimited by (wanted «%s»)\n", i, (*tok)->content);
 			break ;
 		}
 		i++;
@@ -109,7 +65,7 @@ int	save_heredoc(t_cmd *cmd, t_token **tok)
 void	heredoc_handler(int signum)
 {
 	(void)signum;
-	//printf("> ^C\n");
+	printf("> ^C\n");
 	exit(130);
 }
 

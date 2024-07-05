@@ -22,11 +22,51 @@ void    free_env_node(t_env **node)
     *node = NULL;
 }
 
-void    free_all(t_shell data)
+void	free_token(t_token **token)
 {
-    if (data.str_cmd)
-        free(data.str_cmd);
-    free_env_list(data.env);
-    free_env_list(data.export);
-    clear_structs(&data.token, &data.cmd);
+	t_token	*aux;
+
+	if (!*token || !token)
+		return ;
+	while (*token)
+	{
+		aux = (*token)->next;
+		free((*token)->content);
+		free(*token);
+		*token = aux;
+	}
+    *token = NULL;
+}
+
+void	free_cmd(t_cmd **cmd)
+{
+	t_cmd	*aux;
+
+	if (!*cmd || !cmd)
+		return ;
+	while (*cmd)
+	{
+		aux = (*cmd)->next;
+		if ((*cmd)->fdin > 2)
+			close((*cmd)->fdin);
+		if ((*cmd)->fdout > 2)
+			close((*cmd)->fdout);
+		ft_free_matrix((*cmd)->arg);
+		free(*cmd);
+		*cmd = aux;
+	}
+}
+
+void    free_all(t_shell *data)
+{
+    if (data->str_cmd)
+        free(data->str_cmd);
+    if (data->env)
+        free_env_list(data->env);
+    if (data->export)
+        free_env_list(data->export);
+    if (data->token)
+        free_token(&data->token);
+    if (data->cmd)
+        free_cmd(&data->cmd);
 }

@@ -36,6 +36,6 @@ int main(int argc, char **argv, char **envp)
         free(data.str_cmd);
         data.str_cmd = NULL;
     }
-    free_all(data);
+    free_all(&data);
     return ((void)argc, (void)argv, 0);
 }
