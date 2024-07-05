@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-int		g_hdoc = 0;
-
 void	save_heredoc(t_cmd *cmd, t_token **tok)
 {
 	char	*line;
@@ -66,9 +64,7 @@ void	save_outfile(t_cmd *cmd, t_token **tok)
 void	heredoc_handler(int signum)
 {
 	(void)signum;
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
+	printf("> ^C\n");
 	exit(130);
 }
 
