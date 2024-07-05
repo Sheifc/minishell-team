@@ -14,8 +14,7 @@ int main(int argc, char **argv, char **envp)
     t_shell data;
 
     //rl_catch_signals = 0;
-    init_struct(&data, envp);
-    init_env(&data, envp);
+    init(&data, envp);
     while (1)
     {
         data.str_cmd = readline(M "Mini" W "shell" G "--> " RST);
@@ -26,7 +25,7 @@ int main(int argc, char **argv, char **envp)
         lexer(data.str_cmd, &data.token);
         if (data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
-            expand_variables(&data.token, data.env);
+            expand_variables(&data.token);
             fill_struct(&data);
             if (data.cmd != NULL)
             {

@@ -7,53 +7,54 @@ int is_there_a_dollar(char *str)
     i = 0;
     while(str[i] != '\0')
     {
-        if(str[i] == '$')
+        if (str[i] == '$' || str[i] == '-' || str[i] == '~')
             return (1);
         i++;
     }
     return (0);
 }
 
-char *replace_dollar(char *str, t_env *env)
+char	*expand_utils2(char *line, char *temp, int *i, int *temp_len)
 {
-    int i;
-    int j;
-    char *aux;
-    char *final;
-    t_env *aux_env;
+	char	*aux;
+	int		j;
+	char	*new_temp;
+	char	*env_value;
 
-    final = ft_strdup("");
-    aux = ft_strdup("");
-    i = 0;
-    while(str[i])
-    {
-        aux_env = env;
-        if(str[i] != '$')
-            final[i] = str[i];
-        if(str[i] == '$')
-        {
-            i++;
-            j = 0;
-            while (str[i] && (ft_isalnum(str[i]) || str[i] == '_')) 
-            {
-                aux[j] = str[i];
-                j++;
-                i++;
-            }
-            aux[j] = '\0';
-            while(aux_env)
-            {
-                if(ft_strncmp(aux_env->key, aux, ft_strlen(aux_env->key) + ft_strlen(aux)) == 0)
-                {
-                    final = ft_strjoin(final, aux_env->value);
-                    break;
-                }
-                aux_env = aux_env->next;
-            }
-        }
-        else
-            i++;
-    }
-    free(aux);
-    return(final);
+	aux = (char *)malloc(sizeof(ft_strlen(line) + 1));
+	j = 0;
+	(*i)++;
+	while (line[*i] && ft_isalnum(line[*i]))
+		aux[j++] = line[(*i)++];
+	aux[j] = '\0';
+	env_value = getenv(aux);
+	if (!env_value)
+		env_value = "";
+	new_temp = ft_strjoin(temp, env_value);
+	*temp_len += ft_strlen(env_value);
+	free(aux);
+	free(temp);
+	return (new_temp);
+}
+
+char	*replace_dollar(char *line)
+{
+	char *temp;
+	int i;
+	int temp_len;
+
+	temp = ft_strdup("");
+	i = 0;
+	temp_len = 0;
+	while (line[i])
+	{
+		if(line[i] == '~' || line[i] == '-')
+			return(getenv("HOME"));
+		if (line[i] == '$')
+			temp = expand_utils(line, temp, &i, &temp_len);
+		else
+			temp[temp_len++] = line[i++];
+	}
+	temp[temp_len] = '\0';
+	return (temp);
 }

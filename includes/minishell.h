@@ -23,7 +23,10 @@
 # include <unistd.h>
 # include <signal.h>
 
-// ***EXECUTOR***
+//*--------------------INIT--------------------------------
+void    init(t_shell *data, char **envp);
+void	init_struct(t_shell *data, char **envp);
+
 //*--------------------BUILTINS----------------------------
 
 // exec_builtins.c
@@ -81,7 +84,6 @@ void	print_key(t_env *head);
 char	*print_value(t_env *env, char *key);
 void	print_list(t_env *head);
 
-// ***PARSER***
 //*--------------------LEXER-------------------------------
 // lexer.c
 void	lexer(char *str_cmd, t_token **tok);
@@ -105,10 +107,11 @@ void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 // expand_variables.c
-void    expand_variables(t_token **token, t_env *env);
+void    expand_variables(t_token **token);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
-char    *replace_dollar(char *str, t_env *env);
+char	*expand_utils2(char *line, char *temp, int *i, int *temp_len);
+char	*replace_dollar(char *line);
 // expand_utils.c
 char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
 char    *expand_heredoc(char *line);
@@ -125,9 +128,22 @@ int     only_spaces(char *str_cmd);
 void    clear_structs(t_token **token, t_cmd **cmd);
 void	init_struct(t_shell *data, char **envp);
 
-//*--------------------FDS-------------------------------
+//*--------------------REDIRECTIONS---------------------------
 // file_des.c
+int    save_append(t_cmd *cmd, t_token **tok);
+int    save_infile(t_cmd *cmd, t_token **tok);
+int    save_outfile(t_cmd *cmd, t_token **tok);
 int    ft_innout(t_cmd *cmd, t_token **tok);
+
+//*--------------------HEREDOC--------------------------------
+void	heredoc_handler(int signum);
+char	*expand_heredoc(char *line);
+int     save_heredoc(t_cmd *cmd, t_token **tok);
+int     heredoc(t_cmd *cmd, t_token **tok);
+
+//*--------------------SIGNALS--------------------------------
+void    init_signals();
+void	sigint_handler(int signum);
 
 
 #endif

@@ -22,11 +22,12 @@ char    *expand_utils(char *line, char *temp, int *i, int *temp_len)
     return (new_temp);
 }
 
-char    *expand_heredoc(char *line)
+/* char    *expand_heredoc(char *line)
 {
     char    *temp;
     int     i;
     int     temp_len;
+
     temp = ft_strdup("");
     i = 0;
     temp_len = 0;
@@ -39,4 +40,4 @@ char    *expand_heredoc(char *line)
     }
     temp[temp_len] = '\0';
     return (temp);
-}
+} */

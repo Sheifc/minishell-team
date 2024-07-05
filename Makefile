@@ -32,6 +32,7 @@ FILES_PARSER    = init.c    	   \
                   fill_struct.c    \
                   syntaxis.c       \
                   file_des.c       \
+				  heredoc.c 	   \
 				  parser_utils.c
 
 FILES_EXEC      = exec_builtins.c  \
