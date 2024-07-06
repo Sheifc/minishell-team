@@ -6,7 +6,6 @@ void free_arg(char ***matrix)
 
     if (!matrix || !*matrix)
         return;
-
     i = 0;
     while ((*matrix)[i])
     {

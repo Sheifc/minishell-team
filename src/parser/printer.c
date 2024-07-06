@@ -35,8 +35,10 @@ void    print_lists(t_token *tok)
 void    print_cmd_list(t_cmd *cmd)
 {
     int count;
-    if (cmd == NULL)
-        return;
+
+    if (cmd == NULL){
+        printf("Command list is empty.\n");
+        return;}
     while (cmd)
     {
         count = 0;

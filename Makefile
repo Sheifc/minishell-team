@@ -28,7 +28,6 @@ FILES_PARSER    = init.c    	   \
                   expand_variables.c\
 				  expand_utils.c	\
                   exp_utils.c      \
-                  fill_struct.c    \
                   syntaxis.c       \
                   file_des.c       \
 				  heredoc.c 	   \
@@ -36,6 +35,7 @@ FILES_PARSER    = init.c    	   \
 
 FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
+				  token_to_cmd.c   \
 				  free_env.c 	   \
 				  free_token.c	   \
 				  free_cmd.c	   \

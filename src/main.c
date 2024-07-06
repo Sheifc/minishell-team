@@ -26,7 +26,8 @@ int main(int argc, char **argv, char **envp)
         if (data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
             expand_variables(&data.token);
-            fill_struct(&data);
+            token_to_cmd(&data);
+            print_cmd_list(data.cmd);
             if (data.cmd != NULL)
             {
                 executor(&data);

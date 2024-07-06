@@ -62,6 +62,15 @@ char	*get_value(t_env *env, const char *key);
 char    *get_cd_value(t_env *env, const char *key);
 //void	update_env(t_env **env, char *key, char *value);
 
+//*--------------------TOKEN-TO-CMD------------------------
+void    add_cmd_to_list(t_cmd **head, t_cmd *new_cmd);
+t_cmd   *create_cmd_node(void);
+void    add_argument(t_cmd *cmd, char *token_content);
+int     handle_redirection(t_cmd *cmd, t_token **token);
+int     fill_cmd_args(t_cmd *cmd, t_token **token);
+int     add_cmd_to_shell(t_cmd **cmd_list, t_token **token);
+void    token_to_cmd(t_shell *data);
+
 //*--------------------EXECUTOR----------------------------
 // path.c
 void	get_path(t_shell *data);
