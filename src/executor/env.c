@@ -25,6 +25,7 @@ void    init_env(t_shell *data, char **envp)
 
 void	ft_env(t_env *env)
 {
-    print_list(env);
+    if (env)
+        print_list(env);
     return ;
 }

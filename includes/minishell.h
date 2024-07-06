@@ -75,16 +75,25 @@ int     ft_start_pipex(t_shell *data);
 void	ft_swap(char **a, char **b);
 // error.c
 int     ft_error(char *msg, int num);
-// free.c
-void	free_env_list(t_env *head);
-void	free_env_node(t_env **node);
-void	free_token(t_token **token);
-void	free_cmd(t_cmd **cmd);
-void    free_all(t_shell *data);
+
 // printing.c
 void	print_key(t_env *head);
 char	*print_value(t_env *env, char *key);
 void	print_list(t_env *head);
+
+//*--------------------FREE--------------------------------
+void	free_env_list(t_env *head);
+void	free_env_node(t_env **node);
+
+void	free_token(t_token **token);
+void    free_token_list(t_token **token_list);
+
+void    free_arg(char ***matrix);
+void	free_cmd(t_cmd **cmd);
+void    free_cmd_list(t_cmd **cmd_list);
+
+void    clear_structs(t_token **token, t_cmd **cmd);
+void    free_all(t_shell *data);
 
 //*--------------------LEXER-------------------------------
 // lexer.c

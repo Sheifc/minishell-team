@@ -4,8 +4,8 @@ LIBS            = -lft -lreadline
 NAME            = minishell
 
 CC              = gcc
-CFLAGS          = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address
-#LDFLAGS         = -fsanitize=address
+CFLAGS          = -Wall -Werror -Wextra -Iincludes -g -fsanitize=address
+LDFLAGS         = -fsanitize=address
 RM              = rm -rf
 
 SRC_DIR         = src/
@@ -18,7 +18,6 @@ OBJ_PARSER_DIR  = $(OBJ_DIR)parser/
 FILES_SRC       = main.c
 
 FILES_PARSER    = init.c    	   \
-				  clear_struct.c   \
                   lexer.c          \
                   tokenizator.c    \
                   setter.c         \
@@ -37,6 +36,9 @@ FILES_PARSER    = init.c    	   \
 
 FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
+				  free_env.c 	   \
+				  free_token.c	   \
+				  free_cmd.c	   \
                   free.c           \
                   list_utils.c     \
                   key_value.c      \
