@@ -12,6 +12,7 @@ void	init_struct(t_shell *data, char **envp)
     data->status = 0;
     data->pid = 0;
     data->error_code = 0;
+    data->cmd_count = 0;
 }
 
 void	sigint_handler(int signum)

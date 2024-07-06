@@ -48,6 +48,8 @@ void    add_argument(t_shell *data, t_cmd *cmd, char *token_content)
     new_arg[cmd->n_args + 1] = NULL;
     cmd->arg = new_arg;
     cmd->n_args++;
+    printf("Added argument: %s\n", token_content);
+    print_argu(cmd->arg);
 }
 
 int handle_redirection(t_shell *data, t_cmd *cmd, t_token **token)
@@ -63,10 +65,9 @@ int handle_redirection(t_shell *data, t_cmd *cmd, t_token **token)
     if ((*token)->type == IN || (*token)->type == OUT || (*token)->type == APPEND || (*token)->type == HEREDOC)
     {
         status = ft_innout(data, cmd, token);
+        printf("despues de infile function token->content: %s\n", (*token)->content);
         if (status != 0)
             return (status);
-        if (*token && (*token)->type == WORD)
-            *token = (*token)->next;
     }
     return (0);
 }
@@ -86,6 +87,7 @@ int fill_cmd_args(t_shell *data, t_cmd *cmd, t_token **token)
         }
         else if ((*token)->type == WORD || (*token)->type == QUOTE || (*token)->type == DQUOTE)
         {
+            printf("Token content before adding argument: %s\n", (*token)->content);
             add_argument(data, cmd, (*token)->content);
             *token = (*token)->next;
         }
@@ -102,6 +104,7 @@ int add_cmd_to_shell(t_shell *data, t_cmd **cmd_list, t_token **token)
     new_cmd = create_cmd_node();
     if (!new_cmd)
         return (1);
+    printf("Current token en add_cmd_to_shell: %s (type: %d)\n", data->token->content, data->token->type);
     int status = fill_cmd_args(data, new_cmd, token);
     if (status == 0)
         add_cmd_to_list(cmd_list, new_cmd);
@@ -114,6 +117,7 @@ void token_to_cmd(t_shell *data)
 {
     while (data->token)
     {
+        printf("Current token: %s (type: %d)\n", data->token->content, data->token->type);
         if (data->token->type != PIPE)
         {
             int status = add_cmd_to_shell(data, &data->cmd, &data->token);

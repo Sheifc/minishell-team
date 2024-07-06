@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	write_heredoc(char *expanded_line, t_cmd *cmd)
+/* static void	write_heredoc(char *expanded_line, t_cmd *cmd)
 {
 	write(cmd->fdin, expanded_line, ft_strlen(expanded_line));
 	write(cmd->fdin, "\n", 1);
@@ -26,14 +26,14 @@ char	*expand_heredoc(char *line)
 	return (temp);
 }
 
-int	save_heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
+int heredoc_readline(t_shell *data, t_cmd *cmd, t_token **tok)
 {
 	char	*line;
 	char	*expanded_line;
 	int		i;
 
 	i = 1;
-	cmd->fdin = open("hdoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+ 	cmd->fdin = open("hdoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
     if (cmd->fdin == -1)
     {
         ft_error(data, "Error making Heredoc\n", 1);
@@ -83,7 +83,7 @@ int    heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
     if (pid == 0)
     {
         signal(SIGINT, heredoc_handler);
-        save_heredoc(data, cmd, tok);
+        heredoc_readline(data, cmd, tok);
         exit(0);
     }
     *tok = (*tok)->next;
@@ -94,3 +94,15 @@ int    heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
     signal(SIGINT, sigint_handler);
     return (0);
 }
+
+int save_heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
+{
+    t_cmd *last;
+
+    last = get_last_cmd(cmd);
+    (*tok) = (*tok)->next;
+    if (last->fdin >= 3)
+        close(last->fdin);
+    heredoc(data, cmd, tok);
+    return (0);
+} */

@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **envp)
         lexer(data.str_cmd, &data.token);
         if (data.token != NULL && syntaxis_is_ok(&data.token) == 1)
         {
-            expand_variables(&data.token);
+            //expand_variables(&data.token);
             token_to_cmd(&data);
             print_cmd_list(data.cmd);
             if (data.cmd != NULL)

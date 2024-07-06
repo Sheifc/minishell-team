@@ -56,6 +56,7 @@ void	init_env(t_shell *data, char **envp);
 // list_utils.c
 void	add(t_env **head, char *key, char *value);
 void	pop(t_env **head, char *key);
+t_cmd   *get_last_cmd(t_cmd *cmd);
 // key_value.c
 void	get_key_value(t_shell *data, char *str, char **key, char **value);
 char	*get_value(t_shell *data, t_env *env, const char *key);
@@ -89,6 +90,10 @@ int     ft_start_pipex(t_shell *data);
 //*--------------------UTILS-------------------------------
 // exec_utils.c
 void	ft_swap(char **a, char **b);
+void    count_commands(t_shell *data);
+void    init_pid(t_shell *data);
+void	kill_processess(int *pids, int len);
+
 // error.c
 void    ft_error(t_shell *data, char *msg, int num);
 
@@ -96,6 +101,7 @@ void    ft_error(t_shell *data, char *msg, int num);
 void	print_key(t_env *head);
 char	*print_value(t_env *env, char *key);
 void	print_list(t_env *head);
+void    print_argu(char **args);
 
 //*--------------------FREE--------------------------------
 void	free_env_list(t_env *head);

@@ -29,13 +29,13 @@ FILES_PARSER    = init.c    	   \
 				  expand_utils.c	\
                   exp_utils.c      \
                   syntaxis.c       \
-                  file_des.c       \
 				  heredoc.c 	   \
 				  parser_utils.c
 
 FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
 				  token_to_cmd.c   \
+				  file_des.c       \
 				  free_env.c 	   \
 				  free_token.c	   \
 				  free_cmd.c	   \

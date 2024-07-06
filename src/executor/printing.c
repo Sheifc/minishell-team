@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-/* void    print_list(t_env *head)
-{
-    t_env *temp = head;
-
-    while (temp != NULL)
-    {
-        printf("%s", temp->key);
-        if (temp->value)
-            printf("=%s", temp->value);
-        printf("\n");
-        temp = temp->next;
-    }
-} */
 void    print_list(t_env *head)
 {
     t_env *current;
@@ -52,4 +39,14 @@ char *print_value(t_env *env, char *key)
         env = env->next;
     }
     return NULL;
+}
+
+void print_argu(char **args)
+{
+    int i = 0;
+    while (args[i] != NULL)
+    {
+        printf("Arg[%d]: %s\n", i, args[i]);
+        i++;
+    }
 }

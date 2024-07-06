@@ -51,3 +51,13 @@ void    pop(t_env **head, char *key)
         current = current->next;
     }
 }
+
+t_cmd *get_last_cmd(t_cmd *cmd)
+{
+	t_cmd *aux;
+
+	aux = cmd;
+	while (aux->next)
+		aux = aux->next;
+	return (aux);
+}

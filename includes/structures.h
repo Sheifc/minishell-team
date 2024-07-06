@@ -50,6 +50,7 @@ typedef struct s_shell
     int     status;
     pid_t	pid;
     int     error_code;
+    int     cmd_count;
 }	t_shell;
 
 

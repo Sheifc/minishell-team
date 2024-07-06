@@ -22,11 +22,12 @@ void executor(t_shell *data)
     tmpin = dup(0);
     tmpout = dup(1);
     if (data->cmd->fdin == -1)
-        data->cmd->fdin = dup(tmpin); 
+        data->cmd->fdin = dup(tmpin);
     while (data->cmd != NULL)
     {
-        
+        printf("command: %s\n", data->cmd->arg[0]);
         dup2(data->cmd->fdin, 0);
+        printf("fdin: %d\n", data->cmd->fdin);
         close(data->cmd->fdin);
         if (data->cmd->next == NULL)
         {
@@ -50,9 +51,11 @@ void executor(t_shell *data)
             if (data->pid == 0)
             {
                 get_path(data);
-                if (!data->path){
+                if (!data->path)
+                {
                     perror("Error: command not found");
-                    exit(127);}
+                    exit(127);
+                }
                 execve(data->path, data->cmd->arg, data->envp);
                 ft_error(data, "Error; execve failed", 127);
             }
