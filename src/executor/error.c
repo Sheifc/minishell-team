@@ -1,15 +1,16 @@
 #include "minishell.h"
 
-int    ft_error(char *msg, int num)
+void    ft_error(t_shell *data, char *msg, int num)
 {
     if (errno)
     {
         perror("Error");
-        return(errno);
+        data->error_code = errno;
     }
     else
     {
         ft_putstr_fd(msg, STDERR_FILENO);
-        return(num);
+        data->error_code = num;
+        return ;
     }
 }

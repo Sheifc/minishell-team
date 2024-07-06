@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void    print_list(t_env *head)
+/* void    print_list(t_env *head)
 {
     t_env *temp = head;
 
@@ -11,6 +11,22 @@ void    print_list(t_env *head)
             printf("=%s", temp->value);
         printf("\n");
         temp = temp->next;
+    }
+} */
+void    print_list(t_env *head)
+{
+    t_env *current;
+
+    current = head;
+    while (current)
+    {
+        if (current->key && current->value)
+            printf("%s=%s\n", current->key, current->value);
+        else if (current->key)
+            printf("%s=\n", current->key);
+        else if (current->value)
+            printf("=%s\n", current->value);
+        current = current->next;
     }
 }
 

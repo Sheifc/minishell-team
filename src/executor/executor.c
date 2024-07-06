@@ -50,13 +50,14 @@ void executor(t_shell *data)
             if (data->pid == 0)
             {
                 get_path(data);
-                if (!data->path)
-                    ft_error("Error: command not found", 127);
+                if (!data->path){
+                    perror("Error: command not found");
+                    exit(127);}
                 execve(data->path, data->cmd->arg, data->envp);
-                ft_error("Error; execve failed", 127);
+                ft_error(data, "Error; execve failed", 127);
             }
             else if (data->pid < 0)
-                ft_error("Error: fork failed", 127);
+                ft_error(data, "Error: fork failed", 127);
             else
                 if (data->cmd != NULL)
                     close(fdpipe[1]);

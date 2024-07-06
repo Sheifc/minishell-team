@@ -8,9 +8,15 @@ void    free_all(t_shell *data)
         data->str_cmd = NULL;
     }
     if (data->env)
+    {
         free_env_list(data->env);
+        data->env = NULL;
+    }
     if (data->export)
+    {
         free_env_list(data->export);
+        data->export = NULL;
+    }
     if (data->token)
         free_token_list(&data->token);
     if (data->cmd)

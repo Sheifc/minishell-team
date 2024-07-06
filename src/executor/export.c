@@ -11,7 +11,7 @@ void	ft_export(t_shell *data)
     i = 1;
     while (i < data->cmd->n_args)
     {
-        get_key_value(data->cmd->arg[i++], &key, &value);
+        get_key_value(data, data->cmd->arg[i++], &key, &value);
         pop(&data->export, key);
         add(&data->export, key, value);
         if (value)
@@ -28,7 +28,7 @@ void	ft_export(t_shell *data)
         temp = export;
         while (temp->key && temp->next)
         {
-            if (ft_strncmp(temp->key, temp->next->key, ft_strlen(temp->key)+1) > 0)
+            if (ft_strncmp(temp->key, temp->next->key, ft_strlen(temp->key) + 1) > 0)
             {
                 ft_swap(&temp->key, &temp->next->key);
                 ft_swap(&temp->value, &temp->next->value);

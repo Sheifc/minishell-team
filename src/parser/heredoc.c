@@ -26,7 +26,7 @@ char	*expand_heredoc(char *line)
 	return (temp);
 }
 
-int	save_heredoc(t_cmd *cmd, t_token **tok)
+int	save_heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
 {
 	char	*line;
 	char	*expanded_line;
@@ -36,8 +36,8 @@ int	save_heredoc(t_cmd *cmd, t_token **tok)
 	cmd->fdin = open("hdoc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
     if (cmd->fdin == -1)
     {
-        ft_error("Error making Heredoc\n", 1);
-        return 1; // Indicar error
+        ft_error(data, "Error making Heredoc\n", 1);
+        return 1;
     }
 	while (1)
 	{
@@ -69,21 +69,21 @@ void	heredoc_handler(int signum)
 	exit(130);
 }
 
-int    heredoc(t_cmd *cmd, t_token **tok)
+int    heredoc(t_shell *data, t_cmd *cmd, t_token **tok)
 {
     pid_t	pid;
 
     pid = fork();
     if (pid == -1)
     {
-        ft_error("Error forking\n", 1);
-        return 1; // Indicar error
+        ft_error(data, "Error forking\n", 1);
+        return 1;
     }
     *tok = (*tok)->next;
     if (pid == 0)
     {
         signal(SIGINT, heredoc_handler);
-        save_heredoc(cmd, tok);
+        save_heredoc(data, cmd, tok);
         exit(0);
     }
     *tok = (*tok)->next;

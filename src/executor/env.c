@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-void    fill_env_list(t_env **head, char **envp, int *i)
+void    fill_env_list(t_shell *data, t_env **head, char **envp, int *i)
 {
     char    *key;
     char    *value;
 
     while (envp[++(*i)] != NULL)
     {
-        get_key_value(envp[*i], &key, &value);
+        get_key_value(data, envp[*i], &key, &value);
         add(head, key, value);
     }
 }
@@ -19,13 +19,12 @@ void    init_env(t_shell *data, char **envp)
 
     i = -1;
     j = -1;
-    fill_env_list(&(data->env), envp, &i);
-    fill_env_list(&(data->export), envp, &j);
+    fill_env_list(data, &(data->env), envp, &i);
+    fill_env_list(data, &(data->export), envp, &j);
 }
 
 void	ft_env(t_env *env)
 {
-    if (env)
-        print_list(env);
+    print_list(env);
     return ;
 }
