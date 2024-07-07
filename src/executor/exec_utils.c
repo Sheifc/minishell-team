@@ -13,6 +13,7 @@ void    count_commands(t_shell *data)
     t_cmd *current_cmd; 
 
     current_cmd = data->cmd;
+    data->cmd_count = 0;
     while (current_cmd != NULL)
     {
         data->cmd_count++;
@@ -20,14 +21,14 @@ void    count_commands(t_shell *data)
     }
 }
 
-/* void    init_pid(t_shell *data)
+void    init_pid(t_shell *data)
 {
     data->pid = malloc(sizeof(int) * data->cmd_count);
     if (!data->pid)
-        ft_error(data, "Error: malloc failed", 127);
-} */
+        perror("Error: malloc failed");
+}
 
-void	kill_processess(int *pids, int len)
+void	end_processess(int *pids, int len)
 {
 	while (len)
 		kill(pids[--len], SIGKILL);

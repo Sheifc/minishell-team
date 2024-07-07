@@ -35,21 +35,22 @@ void    print_lists(t_token *tok)
 void    print_cmd_list(t_cmd *cmd)
 {
     int count;
-
+    printf("llega\n");
+    printf ("%s \n", cmd->arg[0]);
     if (cmd == NULL){
-        printf("Command list is empty.\n");
+        ft_printf("Command list is empty.\n");
         return;}
     while (cmd)
     {
         count = 0;
         while (cmd->arg[count])
         {
-            printf("Arg[%d]: %s\n", count, cmd->arg[count]);
+            ft_printf("Arg[%d]: %s\n", count, cmd->arg[count]);
             count++;
         }
-        printf("N_args: %d\n", cmd->n_args);
-        printf("FD_IN: %d\n", cmd->fdin);
-        printf("FD_OUT: %d\n", cmd->fdout);
+        ft_printf("N_args: %d\n", cmd->n_args);
+        ft_printf("FD_IN: %d\n", cmd->fdin);
+        ft_printf("FD_OUT: %d\n", cmd->fdout);
         cmd = cmd->next;
     }
 }

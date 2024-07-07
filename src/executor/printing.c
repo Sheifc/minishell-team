@@ -46,7 +46,7 @@ void print_argu(char **args)
     int i = 0;
     while (args[i] != NULL)
     {
-        printf("Arg[%d]: %s\n", i, args[i]);
+        dprintf(2, "Arg[%d]: %s\n", i, args[i]);
         i++;
     }
 }

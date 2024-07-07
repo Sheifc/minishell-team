@@ -48,8 +48,7 @@ typedef struct s_shell
     char    **envp;
     char	*path;
     int     status;
-    pid_t	pid;
-    int     error_code;
+    pid_t	*pid;
     int     cmd_count;
 }	t_shell;
 

@@ -13,7 +13,6 @@ int main(int argc, char **argv, char **envp)
 {
     t_shell data;
 
-    //rl_catch_signals = 0;
     init(&data, envp);
     while (1)
     {
@@ -27,8 +26,6 @@ int main(int argc, char **argv, char **envp)
         {
             //expand_variables(&data.token);
             token_to_cmd(&data);
-            printf("lista de comandos: \n");
-            print_cmd_list(data.cmd);
             if (data.cmd != NULL)
             {
                 executor(&data);
@@ -36,6 +33,7 @@ int main(int argc, char **argv, char **envp)
             }
         }
         free(data.str_cmd);
+        data.cmd_count = 0;
         data.str_cmd = NULL;
     }
     free_all(&data);

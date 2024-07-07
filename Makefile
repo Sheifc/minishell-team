@@ -4,8 +4,8 @@ LIBS            = -lft -lreadline
 NAME            = minishell
 
 CC              = gcc
-CFLAGS          = -Wall -Werror -Wextra -Iincludes -g -fsanitize=address
-LDFLAGS         = -fsanitize=address
+CFLAGS          = -Wall -Werror -Wextra -Iincludes -g #-fsanitize=address
+#LDFLAGS         = -fsanitize=address
 RM              = rm -rf
 
 SRC_DIR         = src/
@@ -35,7 +35,7 @@ FILES_PARSER    = init.c    	   \
 FILES_EXEC      = exec_builtins.c  \
                   exec_utils.c     \
 				  token_to_cmd.c   \
-				  file_des.c       \
+				  redirections.c   \
 				  free_env.c 	   \
 				  free_token.c	   \
 				  free_cmd.c	   \
@@ -51,7 +51,6 @@ FILES_EXEC      = exec_builtins.c  \
                   unset.c          \
                   executor.c       \
                   path.c           \
-                  error.c          \
                   printing.c
 
 SRC_MAIN        = $(addprefix $(SRC_DIR),$(FILES_SRC))

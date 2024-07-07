@@ -10,8 +10,7 @@ void	init_struct(t_shell *data, char **envp)
     data->envp = envp;
     data->path = NULL;
     data->status = 0;
-    data->pid = 0;
-    data->error_code = 0;
+    data->pid = NULL;
     data->cmd_count = 0;
 }
 
@@ -21,7 +20,7 @@ void	sigint_handler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

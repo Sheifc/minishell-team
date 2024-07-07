@@ -41,61 +41,55 @@ void	ft_env(t_env *env);
 // export.c
 void	ft_export(t_shell *data);
 // exit.c
-void	ft_exit(t_shell *data, t_cmd *cmd);
+void	ft_exit(t_cmd *cmd);
 // pwd.c
-char    *get_current_directory(t_shell *data);
-void	ft_pwd(t_shell *data);
+char    *get_current_directory(void);
+void	ft_pwd(void);
 // unset.c
 void	ft_unset(t_shell *data);
 
 //*--------------------ENV---------------------------------
 
 // env.c
-void	fill_env_list(t_shell *data, t_env **head, char **envp, int *i);
+void	fill_env_list(t_env **head, char **envp, int *i);
 void	init_env(t_shell *data, char **envp);
 // list_utils.c
 void	add(t_env **head, char *key, char *value);
 void	pop(t_env **head, char *key);
 t_cmd   *get_last_cmd(t_cmd *cmd);
 // key_value.c
-void	get_key_value(t_shell *data, char *str, char **key, char **value);
-char	*get_value(t_shell *data, t_env *env, const char *key);
+void	get_key_value(char *str, char **key, char **value);
+char	*get_value(t_env *env, const char *key);
 char    *get_cd_value(t_env *env, const char *key);
-//void	update_env(t_env **env, char *key, char *value);
 
 //*--------------------TOKEN-TO-CMD------------------------
 void    add_cmd_to_list(t_cmd **head, t_cmd *new_cmd);
 t_cmd   *create_cmd_node(void);
-void    add_argument(t_shell *data, t_cmd *cmd, char *token_content);
-int     handle_redirection(t_shell *data, t_cmd *cmd, t_token **token);
-int     fill_cmd_args(t_shell *data, t_cmd *cmd, t_token **token);
-int     add_cmd_to_shell(t_shell *data, t_cmd **cmd_list, t_token **token);
+void    add_argument(t_cmd *cmd, char *token_content);
+int     handle_redirection(t_cmd *cmd, t_token **token);
+int     fill_cmd_args(t_cmd *cmd, t_token **token);
+int     add_cmd_to_shell(t_cmd **cmd_list, t_token **token);
 void    token_to_cmd(t_shell *data);
 
 //*--------------------REDIRECTIONS---------------------------
 // file_des.c
-int    save_append(t_shell *data, t_cmd *cmd, t_token **tok);
-int    save_infile(t_shell *data, t_cmd *cmd, t_token **tok);
-int    save_outfile(t_shell *data, t_cmd *cmd, t_token **tok);
-int    ft_innout(t_shell *data, t_cmd *cmd, t_token **tok);
+int    save_append(t_cmd *cmd, t_token **tok);
+int    save_infile(t_cmd *cmd, t_token **tok);
+int    save_outfile(t_cmd *cmd, t_token **tok);
+int    ft_innout(t_cmd *cmd, t_token **tok);
 
 //*--------------------EXECUTOR----------------------------
 // path.c
 void	get_path(t_shell *data);
 // executor.c
 void	executor(t_shell *data);
-void	ft_pipex(t_shell *data);
-int     ft_start_pipex(t_shell *data);
 
 //*--------------------UTILS-------------------------------
 // exec_utils.c
 void	ft_swap(char **a, char **b);
 void    count_commands(t_shell *data);
 void    init_pid(t_shell *data);
-void	kill_processess(int *pids, int len);
-
-// error.c
-void    ft_error(t_shell *data, char *msg, int num);
+void	end_processess(int *pids, int len);
 
 // printing.c
 void	print_key(t_env *head);
@@ -143,12 +137,12 @@ void	parser(t_token **tok, char **envp, t_env *env);
 // expand_variables.c
 void    expand_variables(t_token **token);
 // exp_utils.c
-int     is_there_a_dollar(char *str);
-char	*expand_utils2(char *line, char *temp, int *i, int *temp_len);
-char	*replace_dollar(char *line);
+//int     is_there_a_dollar(char *str);
+//char	*expand_utils2(char *line, char *temp, int *i, int *temp_len);
+//char    *replace_dollar(char *line, t_env *env);
 // expand_utils.c
-char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
-char    *expand_heredoc(char *line);
+//char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
+//char	*expand_heredoc(char *line, t_env *env);
 
 // syntaxis.c
 int     syntaxis_is_ok(t_token **token);
@@ -159,7 +153,6 @@ void	init_struct(t_shell *data, char **envp);
 
 //*--------------------HEREDOC--------------------------------
 void	heredoc_handler(int signum);
-char	*expand_heredoc(char *line);
 int     save_heredoc(t_shell *data, t_cmd *cmd, t_token **tok);
 int     heredoc(t_shell *data, t_cmd *cmd, t_token **tok);
 

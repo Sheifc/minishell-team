@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-void    get_key_value(t_shell *data, char *str, char **key, char **value)
+void    get_key_value(char *str, char **key, char **value)
 {
     char *equal;
 
     if (str == NULL || key == NULL || value == NULL)
-        ft_error(data, "Error: null arguments", 0);
+        perror("Error: null arguments");
     *key = ft_substr(str, 0, ft_strchr(str, '=') - str);
     equal = ft_strchr(str, '=');
     if (equal)
@@ -14,10 +14,10 @@ void    get_key_value(t_shell *data, char *str, char **key, char **value)
         *value = NULL;
 }
 
-char    *get_value(t_shell *data, t_env *env, const char *key)
+char    *get_value(t_env *env, const char *key)
 {
     if (env == NULL || key == NULL)
-        ft_error(data, "Error: null arguments", 0);
+        perror("Error: null arguments");
     while (env != NULL && env->next != NULL)
     {
         if (!ft_strncmp(env->key, key, ft_strlen(key) + 1))
