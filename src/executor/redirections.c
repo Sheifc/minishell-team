@@ -57,7 +57,33 @@ int save_outfile(t_cmd *cmd, t_token **tok)
     return (0);
 }
 
-int ft_innout(t_cmd *cmd, t_token **tok)
+static int	ft_fork(t_cmd *cmd, t_token **tok, t_env *env)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == - 1)
+	{
+		perror("Error: heredoc fork failed");
+		return (1);
+	}
+	*tok = (*tok)->next;
+	if (pid == 0)
+	{
+		signal(SIGINT, heredoc_handler);
+		save_heredoc(cmd, tok, env);
+		exit(0);
+	}
+	*tok = (*tok)->next;
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, NULL, 0);
+	cmd->fdin = open("hdoc.tmp", O_RDONLY);
+	unlink("hdoc.tmp");
+	signal(SIGINT, sigint_handler);
+	return (0);
+}
+
+int	ft_innout(t_cmd *cmd, t_token **tok, t_env *env)
 {
     if (cmd == NULL || tok == NULL || *tok == NULL)
     {
@@ -71,8 +97,8 @@ int ft_innout(t_cmd *cmd, t_token **tok)
         flag = save_outfile(cmd, tok);
     else if ((*tok)->type == APPEND)
         flag = save_append(cmd, tok);
-    // else if ((*tok)->type == HEREDOC)
-    //     flag = save_heredoc(data, cmd, tok);
+    else if ((*tok)->type == HEREDOC)
+		flag = ft_fork(cmd, tok, env);
     else
         return (0);
     return (flag);

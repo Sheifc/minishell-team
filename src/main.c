@@ -9,6 +9,20 @@ void    handle_empty_or_whitespace_commands(char **str_cmd)
     }
 }
 
+static void	minishell(t_shell *data)
+{
+	if (data->token != NULL && syntaxis_is_ok(&data->token) == 1)
+	{
+		expand_variables(&data->token, data->env, data);
+		token_to_cmd(data);
+		if (data->cmd != NULL)
+		{
+			executor(data);
+			clear_structs(&data->token, &data->cmd);
+		}
+	}
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_shell data;
@@ -22,16 +36,7 @@ int main(int argc, char **argv, char **envp)
         add_history(data.str_cmd);
         handle_empty_or_whitespace_commands(&data.str_cmd);
         lexer(data.str_cmd, &data.token);
-        if (data.token != NULL && syntaxis_is_ok(&data.token) == 1)
-        {
-            //expand_variables(&data.token);
-            token_to_cmd(&data);
-            if (data.cmd != NULL)
-            {
-                executor(&data);
-                clear_structs(&data.token, &data.cmd);
-            }
-        }
+		minishell(&data);
         free(data.str_cmd);
         data.cmd_count = 0;
         data.str_cmd = NULL;

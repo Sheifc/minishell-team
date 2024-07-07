@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	access_cmd(t_shell *data)
+static void	access_cmd(t_shell *data)
 {
     if (access(data->cmd->arg[0], X_OK) == 0)
     {
@@ -8,6 +8,7 @@ void	access_cmd(t_shell *data)
         return ;
     }
 }
+
 void	get_path(t_shell *data, t_cmd *cmd)
 {
 	char	**content_splited;
