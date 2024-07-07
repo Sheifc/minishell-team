@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	save_heredoc(t_cmd *cmd, t_token **tok)
+void	save_heredoc(t_cmd *cmd, t_token **tok, t_env *env)
 {
 	char	*line;
 	char	*expanded_line;
@@ -20,7 +20,7 @@ void	save_heredoc(t_cmd *cmd, t_token **tok)
 		}
 		i++;
 		add_history(line);
-		expanded_line = expand_heredoc(line);
+		expanded_line = expand_heredoc(line, env);
 		if (ft_strncmp(line, (*tok)->content, ft_strlen((*tok)->content)
 				+ 1) == 0)
 		{
@@ -68,7 +68,7 @@ void	heredoc_handler(int signum)
 	exit(130);
 }
 
-void	ft_innout(t_cmd *cmd, t_token **tok)
+void	ft_innout(t_cmd *cmd, t_token **tok, t_env *env)
 {
 	int	pid;
 
@@ -90,7 +90,7 @@ void	ft_innout(t_cmd *cmd, t_token **tok)
 		if (pid == 0)
 		{
 			signal(SIGINT, heredoc_handler);
-			save_heredoc(cmd, tok);
+			save_heredoc(cmd, tok, env);
 			exit(0);
 		}
 		*tok = (*tok)->next;

@@ -23,11 +23,12 @@ char	*expand_utils(char *line, char *temp, int *i, int *temp_len)
 	return (new_temp);
 }
 
-char	*expand_heredoc(char *line)
+char	*expand_heredoc(char *line, t_env *env)
 {
 	char	*temp;
 	int		i;
 	int		temp_len;
+	char   *home;
 
 	temp = ft_strdup("");
 	i = 0;
@@ -36,6 +37,14 @@ char	*expand_heredoc(char *line)
 	{
 		if (line[i] == '$')
 			temp = expand_utils(line, temp, &i, &temp_len);
+		else if ((line[i] == '~' && line[i + 1] == '\0') || line[i] == '-')
+		{
+            home = get_value(env, "HOME");
+            temp = malloc(sizeof(ft_strlen(home)));
+            temp = ft_strdup(home);
+            temp_len += ft_strlen(home);
+            i++;
+        }
 		else
 			temp[temp_len++] = line[i++];
 	}

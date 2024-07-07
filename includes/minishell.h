@@ -102,13 +102,13 @@ void	parser(t_token **tok, char **envp, t_env *env);
 
 //*--------------------EXPAND_VARIABLES---------------------
 // expand_variables.c
-void	expand_variables(t_token **token);
+void	expand_variables(t_token **token, t_env *env, t_shell *data);
 // exp_utils.c
 int     is_there_a_dollar(char *str);
-char    *replace_dollar(char *str);
+char    *replace_dollar(char *str, t_env *env, t_shell *data);
 // expand_utils.c
 char    *expand_utils(char *line, char *temp, int *i, int *temp_len);
-char    *expand_heredoc(char *line);
+char    *expand_heredoc(char *line, t_env *env);
 
 //*--------------------FILL_STRUCT--------------------------
 // fill_struct.c
@@ -123,7 +123,7 @@ void	init_struct(t_shell *data, char **envp);
 
 //*--------------------FDS-------------------------------
 // file_des.c
-void    ft_innout(t_cmd *cmd, t_token **tok);
+void    ft_innout(t_cmd *cmd, t_token **tok, t_env *env);
 // hdoc_utils.c
 void write_heredoc(char *expanded_line, t_cmd *cmd);
 void	sigint_handler(int signum);

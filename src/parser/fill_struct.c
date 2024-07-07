@@ -35,9 +35,9 @@ t_cmd	*create_cmd_node(void)
 	return (node);
 }
 
-void	handle_redirection(t_cmd *cmd, t_token **token)
+void	handle_redirection(t_cmd *cmd, t_token **token, t_env *env)
 {
-	ft_innout(cmd, token);
+	ft_innout(cmd, token, env);
 	if (*token && (*token)->type == WORD)
 		*token = (*token)->next;
 }
@@ -66,13 +66,13 @@ void	add_argument(t_cmd *cmd, char *arg)
 	cmd->n_args++;
 }
 
-void	fill_cmd_args(t_cmd *cmd, t_token **token)
+void	fill_cmd_args(t_cmd *cmd, t_token **token, t_env *env)
 {
 	while (*token && (*token)->type != PIPE)
 	{
 		if ((*token)->type == IN || (*token)->type == OUT
 			|| (*token)->type == APPEND || (*token)->type == HEREDOC)
-			handle_redirection(cmd, token);
+			handle_redirection(cmd, token, env);
 		else if ((*token)->type == WORD || (*token)->type == QUOTE
 			|| (*token)->type == DQUOTE)
 		{
@@ -84,14 +84,14 @@ void	fill_cmd_args(t_cmd *cmd, t_token **token)
 	}
 }
 
-void	add_cmd_to_shell(t_cmd **cmd_list, t_token **token)
+void	add_cmd_to_shell(t_cmd **cmd_list, t_token **token, t_env *env)
 {
 	t_cmd	*new_cmd;
 
 	new_cmd = create_cmd_node();
 	if (new_cmd)
 	{
-		fill_cmd_args(new_cmd, token);
+		fill_cmd_args(new_cmd, token, env);
 		add_cmd_to_list(cmd_list, new_cmd);
 	}
 }
@@ -101,7 +101,7 @@ void	fill_struct(t_shell *data)
 	while (data->token)
 	{
 		if (data->token->type != PIPE)
-			add_cmd_to_shell(&data->cmd, &data->token);
+			add_cmd_to_shell(&data->cmd, &data->token, data->env);
 		else if (data->token->type == PIPE)
 			data->token = data->token->next;
 	}

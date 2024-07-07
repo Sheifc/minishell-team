@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int main(int argc, char **argv, char **envp)
 {
@@ -18,9 +18,9 @@ int main(int argc, char **argv, char **envp)
             ft_exit_signal();
         add_history(data.str_cmd);
         lexer(data.str_cmd, &data.token);
-        if (data.token != NULL && syntaxis_is_ok(&data.token) == 1 && ft_strlen(data.str_cmd) && only_spaces(data.str_cmd) == 0)
+        if ((data.token != NULL && syntaxis_is_ok(&data.token) == 1 && ft_strlen(data.str_cmd)) && only_spaces(data.str_cmd) == 0)
         {
-            expand_variables(&data.token);
+            expand_variables(&data.token, data.env, &data);
             fill_struct(&data);
             executor(&data);
         }

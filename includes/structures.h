@@ -49,7 +49,7 @@ typedef struct s_shell
     char	*path;
     int     status;
     pid_t	pid;
-    int flag_hdoc;
+    int error_code;
 }	t_shell;
 
 

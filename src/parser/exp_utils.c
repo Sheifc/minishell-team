@@ -37,24 +37,31 @@ char	*expand_utils2(char *line, char *temp, int *i, int *temp_len)
 	return (new_temp);
 }
 
-char	*replace_dollar(char *line)
+char *replace_dollar(char *line, t_env *env, t_shell *data)
 {
-	char *temp;
-	int i;
-	int temp_len;
+    char *temp;
+    int i = 0;
+    int temp_len = 0;
 
 	temp = ft_strdup("");
-	i = 0;
-	temp_len = 0;
-	while (line[i])
+    while (line[i])
 	{
-		if(line[i] == '~' || line[i] == '-')
-			return(getenv("HOME"));
 		if (line[i] == '$')
-			temp = expand_utils(line, temp, &i, &temp_len);
+		{
+			if(line[i + 1] == '?' && line[i + 2] == '\0')
+			{
+				temp = ft_strjoin(temp, ft_itoa(data->status));
+				temp_len += ft_strlen(ft_itoa(data->status));
+				i += 2;
+			}
+			else
+				temp = expand_utils2(line, temp, &i, &temp_len);
+		}
+        else if ((line[i] == '~' && line[i + 1] == '\0') || line[i] == '-')
+            return(get_value(env, "HOME"));
 		else
-			temp[temp_len++] = line[i++];
-	}
-	temp[temp_len] = '\0';
-	return (temp);
+            temp[temp_len++] = line[i++];
+        temp[temp_len] = '\0';
+    }
+    return temp;
 }
