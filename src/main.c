@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **envp)
         {
             //expand_variables(&data.token);
             token_to_cmd(&data);
+            printf("lista de comandos: \n");
             print_cmd_list(data.cmd);
             if (data.cmd != NULL)
             {

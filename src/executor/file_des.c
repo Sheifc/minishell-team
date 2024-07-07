@@ -40,7 +40,8 @@ int save_append(t_shell *data, t_cmd *cmd, t_token **tok)
         ft_error(data, "Error appending fd\n", 1);
         return (1);
     }
-    (*tok) = (*tok)->next;
+    if ((*tok)->next != NULL)
+        (*tok) = (*tok)->next;
     return (0);
 }
 
@@ -50,16 +51,21 @@ int save_outfile(t_shell *data, t_cmd *cmd, t_token **tok)
 
     last = get_last_cmd(cmd);
     (*tok) = (*tok)->next;
+    printf("en outfile tok->content: %s\n", (*tok)->content);
     if (last->fdout > 2)
         close(last->fdout);
+    printf("save outfile fdout: %d\n", last->fdout);
     if (last->fdout == -1)
         last->fdout = open((*tok)->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    printf("despues de open fdout: %d\n", last->fdout);
     if (cmd->fdout == -1)
     {
         ft_error(data, "Error opening fd\n", 1);
         return (1);
     }
-    *tok = (*tok)->next;
+    if ((*tok)->next != NULL)
+        *tok = (*tok)->next;
+    printf("al final de la funcion outfile tok->content: %s\n", (*tok)->content);
     return (0);
 }
 

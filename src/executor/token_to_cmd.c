@@ -3,18 +3,24 @@
 void add_cmd_to_list(t_cmd **head, t_cmd *new_cmd)
 {
     t_cmd *temp;
-
-    if (!new_cmd)
-        return ;
-    if (*head == NULL)
-        *head = new_cmd;
+    printf("llega a add_cmd_to_list\n");
+    if (!new_cmd){
+        printf("new_cmd es NULL, retornando\n");
+        return ;}
+    if (*head == NULL){
+        printf("*head es NULL, asignando new_cmd a *head\n");
+        *head = new_cmd;}
     else
     {
         temp = *head;
-        while (temp->next != NULL)
-            temp = temp->next;
+        printf("*head no es NULL, recorriendo la lista\n");
+        while (temp->next != NULL){
+            printf("Nodo actual: %p, siguiente nodo: %p\n", (void*)temp, (void*)temp->next);
+            temp = temp->next;}
+        printf("Último nodo encontrado: %p, asignando new_cmd: %p a temp->next\n", (void*)temp, (void*)new_cmd);
         temp->next = new_cmd;
     }
+    printf("add_cmd_to_list terminado\n");
 }
 
 t_cmd   *create_cmd_node(void)
@@ -44,9 +50,13 @@ void    add_argument(t_shell *data, t_cmd *cmd, char *token_content)
         new_arg[i] = cmd->arg[i];
         i++;
     }
+    printf("cmd->n_args: %d\n", cmd->n_args);
+    printf("new_arg: %p\n", (void*)new_arg);
     new_arg[cmd->n_args] = ft_strdup(token_content);
+    printf("new_arg[cmd->n_args]: %s\n", new_arg[cmd->n_args]);
     new_arg[cmd->n_args + 1] = NULL;
     cmd->arg = new_arg;
+    printf("cmd->arg: %p\n", (void*)cmd->arg);
     cmd->n_args++;
     printf("Added argument: %s\n", token_content);
     print_argu(cmd->arg);
@@ -62,10 +72,12 @@ int handle_redirection(t_shell *data, t_cmd *cmd, t_token **token)
         ft_error(data, "Invalid pointer\n", 1);
         return (1);
     }
+    printf("Handling redirection: %s %u\n", (*token)->content, (*token)->type);
     if ((*token)->type == IN || (*token)->type == OUT || (*token)->type == APPEND || (*token)->type == HEREDOC)
     {
+        printf("entra: %s %u\n", (*token)->content, (*token)->type);
         status = ft_innout(data, cmd, token);
-        printf("despues de infile function token->content: %s\n", (*token)->content);
+        printf("despues function save file token->content: %s\n", (*token)->content);
         if (status != 0)
             return (status);
     }
@@ -89,38 +101,49 @@ int fill_cmd_args(t_shell *data, t_cmd *cmd, t_token **token)
         {
             printf("Token content before adding argument: %s\n", (*token)->content);
             add_argument(data, cmd, (*token)->content);
+            printf("sale de add argument: %s\n", (*token)->content);
             *token = (*token)->next;
         }
         else
             *token = (*token)->next;
     }
+    printf("acaba fill_cmd_args\n  ");
     return (status);
 }
 
 int add_cmd_to_shell(t_shell *data, t_cmd **cmd_list, t_token **token)
 {
     t_cmd *new_cmd;
+    int status;
     
     new_cmd = create_cmd_node();
+    status = 0;
     if (!new_cmd)
         return (1);
     printf("Current token en add_cmd_to_shell: %s (type: %d)\n", data->token->content, data->token->type);
-    int status = fill_cmd_args(data, new_cmd, token);
+    status = fill_cmd_args(data, new_cmd, token);
+    printf("Status en cmd_to_shell: %d\n", status);
     if (status == 0)
         add_cmd_to_list(cmd_list, new_cmd);
     else
-        free_cmd(&new_cmd); 
+        free_cmd(&new_cmd);
+    printf("Lista de comandos: final add_cmd_to_shell \n");
+    print_cmd_list(*cmd_list);
     return (status);
 }
 
 void token_to_cmd(t_shell *data)
 {
+    int status; 
+
+    status = 0;
     while (data->token)
     {
         printf("Current token: %s (type: %d)\n", data->token->content, data->token->type);
         if (data->token->type != PIPE)
         {
-            int status = add_cmd_to_shell(data, &data->cmd, &data->token);
+            status = add_cmd_to_shell(data, &data->cmd, &data->token);
+            printf("Status: %d\n", status);
             if (status != 0)
             {
                 clear_structs(&data->token, &data->cmd);
@@ -130,4 +153,5 @@ void token_to_cmd(t_shell *data)
         else if (data->token->type == PIPE)
             data->token = data->token->next;
     }
+    printf("Token to cmd finished\n");
 }
