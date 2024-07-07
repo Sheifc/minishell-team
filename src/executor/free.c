@@ -25,8 +25,7 @@ void    free_all(t_shell *data)
 
 void clear_structs(t_token **token, t_cmd **cmd)
 {
-	printf("token: %p, *token: %p\n", token, *token);
-    if (token && *token)
+    if (token)
         free_token_list(token);
     if (cmd && *cmd)
         free_cmd_list(cmd);

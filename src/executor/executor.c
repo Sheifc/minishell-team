@@ -29,6 +29,7 @@ void	executer(t_shell *data, t_cmd *current, int i)
 	if (!execute_builtin(data))
 	{
 		data->pid[i] = fork();
+		dprintf(2, "pid[%d]: %d, cmd: %s\n", i, data->pid[i], current->arg[0]);
 		if (data->pid[i] == 0)
 		{
 			get_path(data, current);

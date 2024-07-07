@@ -23,7 +23,7 @@ void    count_commands(t_shell *data)
 
 void    init_pid(t_shell *data)
 {
-    data->pid = malloc(sizeof(int) * data->cmd_count);
+    data->pid = ft_calloc(sizeof(int), data->cmd_count);
     if (!data->pid)
         perror("Error: malloc failed");
 }

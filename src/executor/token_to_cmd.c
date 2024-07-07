@@ -111,21 +111,23 @@ int add_cmd_to_shell(t_cmd **cmd_list, t_token **token)
 
 void token_to_cmd(t_shell *data)
 {
-    int status; 
+    int status;
+	t_token *token_ptr;
 
     status = 0;
-    while (data->token)
+	token_ptr = data->token;
+    while (token_ptr)
     {
-        if (data->token->type != PIPE)
+        if (token_ptr->type != PIPE)
         {
-            status = add_cmd_to_shell(&data->cmd, &data->token);
+            status = add_cmd_to_shell(&data->cmd, &token_ptr);
             if (status != 0)
             {
-                clear_structs(&data->token, &data->cmd);
+                clear_structs(&token_ptr, &data->cmd);
                 break ;
             }
         }
-        else if (data->token->type == PIPE)
-            data->token = data->token->next;
+        else if (token_ptr->type == PIPE)
+            token_ptr = token_ptr->next;
     }
 }
