@@ -25,6 +25,7 @@ t_token	*list_empty(int type, char *content)
 	t_token	*node;
 
 	node = (t_token *)malloc(sizeof(t_token));
+	printf("node: %p\n", node);
 	if (!node)
 		return (NULL);
 	node->content = ft_strdup(content);

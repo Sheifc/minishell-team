@@ -30,6 +30,7 @@ void    init_pid(t_shell *data)
 
 void	end_processess(int *pids, int len)
 {
+	printf("len: %d\n", len);
 	while (len)
 		kill(pids[--len], SIGKILL);
 	free(pids);

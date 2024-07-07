@@ -8,7 +8,7 @@ void	access_cmd(t_shell *data)
         return ;
     }
 }
-void	get_path(t_shell *data)
+void	get_path(t_shell *data, t_cmd *cmd)
 {
 	char	**content_splited;
 	int		i;
@@ -24,7 +24,7 @@ void	get_path(t_shell *data)
 	while (content_splited[++i] != NULL)
 	{
 		path = ft_strjoin(content_splited[i], "/");
-		path = ft_strjoin(path, data->cmd->arg[0]);
+		path = ft_strjoin(path, cmd->arg[0]);
 		if (access(path, X_OK) == 0)
         {
             data->path = path;

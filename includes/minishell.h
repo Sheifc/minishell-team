@@ -80,7 +80,7 @@ int    ft_innout(t_cmd *cmd, t_token **tok);
 
 //*--------------------EXECUTOR----------------------------
 // path.c
-void	get_path(t_shell *data);
+void	get_path(t_shell *data, t_cmd *cmd);
 // executor.c
 void	executor(t_shell *data);
 

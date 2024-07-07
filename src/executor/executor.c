@@ -5,23 +5,23 @@ void	redirection(t_cmd *current, int tmpout, int last_cmd)
 	int fdpipe[2];
 
 	dup2(current->fdin, 0);
-		close(current->fdin);    
-		if (last_cmd)
-		{
-			if (current->fdout == -1)
-				current->fdout = dup(tmpout);
-		}
+	close(current->fdin);
+	if (last_cmd)
+	{
+		if (current->fdout == -1)
+			current->fdout = dup(tmpout);
+	}
+	else
+	{
+		pipe(fdpipe);
+		current->next->fdin = fdpipe[0];
+		if (current->fdout == -1)
+			current->fdout = fdpipe[1];
 		else
-		{
-			pipe(fdpipe);
-			current->next->fdin = fdpipe[0];
-			if (current->fdout == -1)
-				current->fdout = fdpipe[1];
-			else
-				close(fdpipe[1]);
-		}
-		dup2(current->fdout, 1);
-		close(current->fdout);
+			close(fdpipe[1]);
+	}
+	dup2(current->fdout, 1);
+	close(current->fdout);
 }
 
 void	executer(t_shell *data, t_cmd *current, int i)
@@ -31,7 +31,7 @@ void	executer(t_shell *data, t_cmd *current, int i)
 		data->pid[i] = fork();
 		if (data->pid[i] == 0)
 		{
-			get_path(data);
+			get_path(data, current);
 			if (!data->path)
 			{
 				perror("Error: command not found");
@@ -43,9 +43,9 @@ void	executer(t_shell *data, t_cmd *current, int i)
 		}
 		else if (data->pid[i] < 0)
 			perror("Error: fork failed");
-		else
-			if (data->cmd != NULL)
-				close(current->fdout);
+		// else
+		// 	if (current != NULL)
+		// 		close(current->fdout);
 	}
 }
 
@@ -82,6 +82,6 @@ void executor(t_shell *data)
 	}
 	waitpid(data->pid[data->cmd_count-1], &data->status, 0);
 	data->status = WEXITSTATUS(data->status);
-	end_processess(data->pid, data->cmd_count);
+	end_processess(data->pid, data->cmd_count - 1);
 	restart_fds(tmpin, tmpout);
 }
