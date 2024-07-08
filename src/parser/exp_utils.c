@@ -37,7 +37,7 @@ char	*expand_utils2(char *line, char *temp, int *i, int *temp_len)
 	return (new_temp);
 }
 
-char *replace_dollar(char *line, t_env *env, t_shell *data)
+char *replace_dollar(char *line, t_env *env, t_shell *data) // si has incluido como parametro la estructura data, puedes acceder a env desde data->env
 {
     char *temp;
     int i = 0;
