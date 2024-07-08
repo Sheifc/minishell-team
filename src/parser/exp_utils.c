@@ -21,7 +21,7 @@ char	*expand_utils2(char *line, char *temp, int *i, int *temp_len)
 	char	*new_temp;
 	char	*env_value;
 
-	aux = (char *)malloc(sizeof(ft_strlen(line) + 1)); // se tiene que proteger malloc con perror en caso de error
+	aux = (char *)malloc(sizeof(ft_strlen(line) + 1)); // se tiene que proteger malloc en caso de error al reservar memoria
 	j = 0;
 	(*i)++;
 	while (line[*i] && ft_isalnum(line[*i]))
