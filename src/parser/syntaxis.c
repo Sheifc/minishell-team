@@ -11,7 +11,7 @@ int in_out_parser(t_token **tok)
 	{
 		if(aux->next == NULL)
         {
-			printf("bash: syntax error near unexpected token 'newline'\n"); // si hay un error de sintaxis se tiene que generar un error, no printear un mensaje, esto es aplicable a todos los errores, hay que usar la funcion perror
+			printf("bash: syntax error near unexpected token 'newline'\n"); // si hay un error de sintaxis se tiene que generar un error, no printear un mensaje, si tienes dudas de como se manejan los errores de sintaxis, Matias te puede ayudar con esto
             return(1);
         }
 		else if((aux->type == IN && aux->next->type != WORD) || (aux->type == HEREDOC && aux->next->type != WORD))
@@ -67,7 +67,7 @@ int is_new_line(t_token *tok)
 		return(0);
 }
 
-int syntaxis_is_ok(t_token **token)
+int syntaxis_is_ok(t_token **token) // en los errores de sintaxis hay que incluir las comillas impares que le falta su pareja y generarse un error
 {
     if(is_new_line(*token))
         return(0);
