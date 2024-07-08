@@ -16,7 +16,7 @@ int in_out_parser(t_token **tok)
         }
 		else if((aux->type == IN && aux->next->type != WORD) || (aux->type == HEREDOC && aux->next->type != WORD))
         {
-			printf("bash: syntax error near unexpected token '<'\n");
+			printf("bash: syntax error near unexpected token '<'\n"); // como no estamos replicando bash, seria mas adecuado usar el nombre del programa minishell en estos errores en lugar de bash
             return(1);
         }
 		else if((aux->type == OUT && aux->next->type != WORD) || (aux->type == APPEND && aux->next->type != WORD))
