@@ -78,6 +78,11 @@ static int	ft_fork(t_cmd *cmd, t_token **tok, t_env *env)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, NULL, 0);
 	cmd->fdin = open("hdoc.tmp", O_RDONLY);
+	if (cmd->fdin == -1)
+    	{
+        	perror("Error: reading temp file");
+        	return (1);
+    	}	
 	unlink("hdoc.tmp");
 	signal(SIGINT, sigint_handler);
 	return (0);
