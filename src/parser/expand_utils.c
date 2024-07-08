@@ -13,7 +13,7 @@ char	*expand_utils(char *line, char *temp, int *i, int *temp_len)
 	while (line[*i] && ft_isalnum(line[*i]))
 		aux[j++] = line[(*i)++];
 	aux[j] = '\0';
-	env_value = getenv(aux);
+	env_value = getenv(aux); // no se puede usar getenv
 	if (!env_value)
 		env_value = "";
 	new_temp = ft_strjoin(temp, env_value);
@@ -39,7 +39,7 @@ char	*expand_heredoc(char *line, t_env *env)
 			temp = expand_utils(line, temp, &i, &temp_len);
 		else if ((line[i] == '~' && line[i + 1] == '\0') || line[i] == '-')
 		{
-            home = get_value(env, "HOME");
+            home = get_value(env, "HOME"); // no uses la lista env iriginal para evitar leaks y q los builtins funcionen, create una copia de la lista env llamale aux, current o como quieras
             temp = malloc(sizeof(ft_strlen(home)));
             temp = ft_strdup(home);
             temp_len += ft_strlen(home);
