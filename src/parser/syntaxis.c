@@ -11,7 +11,7 @@ int in_out_parser(t_token **tok)
 	{
 		if(aux->next == NULL)
         {
-			printf("bash: syntax error near unexpected token 'newline'\n");
+			printf("bash: syntax error near unexpected token 'newline'\n"); // si hay un error de sintaxis se tiene que generar un error no printear un mensaje, esto es aplicable a todos los errores
             return(1);
         }
 		else if((aux->type == IN && aux->next->type != WORD) || (aux->type == HEREDOC && aux->next->type != WORD))
