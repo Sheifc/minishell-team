@@ -27,7 +27,7 @@ char	*expand_utils2(char *line, char *temp, int *i, int *temp_len)
 	while (line[*i] && ft_isalnum(line[*i]))
 		aux[j++] = line[(*i)++];
 	aux[j] = '\0';
-	env_value = getenv(aux);
+	env_value = getenv(aux); //esto no se puede usar en el proyecto
 	if (!env_value)
 		env_value = "";
 	new_temp = ft_strjoin(temp, env_value);
@@ -58,7 +58,7 @@ char *replace_dollar(char *line, t_env *env, t_shell *data)
 				temp = expand_utils2(line, temp, &i, &temp_len);
 		}
         else if ((line[i] == '~' && line[i + 1] == '\0') || line[i] == '-')
-            return(get_value(env, "HOME"));
+            return(get_value(env, "HOME")); // no le puedes meter directamente env, create una copia de la lista env llamale aux, current o como quieras, esto crea leaks y afecta a los builtins recorreer la lista original
 		else
             temp[temp_len++] = line[i++];
         temp[temp_len] = '\0';

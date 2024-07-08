@@ -6,6 +6,13 @@ void	write_heredoc(char *expanded_line, t_cmd *cmd)
 	write(cmd->fdin, "\n", 1);
 }
 
+void	heredoc_handler(int signum)
+{
+	(void)signum;
+	printf("> ^C\n");
+	exit(130);
+}
+
 void	save_heredoc(t_cmd *cmd, t_token **tok, t_env *env)
 {
 	char	*line;
@@ -37,11 +44,3 @@ void	save_heredoc(t_cmd *cmd, t_token **tok, t_env *env)
 		free(line);
 	}
 }
-
-void	heredoc_handler(int signum)
-{
-	(void)signum;
-	printf("> ^C\n");
-	exit(130);
-}
-
